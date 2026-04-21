@@ -1,100 +1,91 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Public File List + Private Upload</title>
+  <title>Upload Public Simple</title>
   <style>
-    body { font-family: Arial; background:#f4f4f4; text-align:center; padding:40px; }
-    .container { background:#fff; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); max-width:500px; margin:auto; }
-    input, button { margin:10px 0; padding:10px; }
-    button { background:#007bff; color:white; border:none; border-radius:5px; cursor:pointer; }
-    button:hover { background:#0056b3; }
-    ul { list-style:none; padding:0; }
-    li { background:#eee; margin:10px 0; padding:10px; border-radius:5px; display:flex; justify-content:space-between; }
+    body { font-family: Arial; text-align:center; padding:40px; background:#f4f4f4; }
+    .box { background:#fff; padding:20px; border-radius:10px; max-width:500px; margin:auto; }
+    button { padding:10px; margin:10px; }
+    li { margin:10px; }
   </style>
 </head>
-<body><div class="container">
-  <h2>Daftar File (Public)</h2>
-  <ul id="fileList"></ul>  <hr>  <h3>Upload File (Private)</h3>
-  <input type="password" id="password" placeholder="Masukkan Password">
+<body>
+
+<div class="box">
+  <h2>📂 File Public</h2>
+
+  <button onclick="goWA()">📢 Saluran Krammz</button>
+
+  <ul id="list"></ul>
+
+  <hr>
+
+  <h3>🔐 Upload</h3>
+  <input type="password" id="pass" placeholder="Password">
   <br>
-  <input type="file" id="fileInput" style="display:none;">
+  <input type="file" id="file" style="display:none;">
   <br>
-  <button onclick="login()">Unlock Upload</button>
-  <button onclick="uploadFile()" id="uploadBtn" style="display:none;">Upload File</button>
-</div><script>
-  const ADMIN_PASSWORD = "12345"; // GANTI PASSWORD
+  <button onclick="login()">Unlock</button>
+  <button onclick="upload()" id="btn" style="display:none;">Upload</button>
+</div>
 
-  let files = JSON.parse(localStorage.getItem('myFiles')) || [];
-  let isUnlocked = false;
+<script>
+const PASSWORD = "12345";
+let unlocked = false;
+let files = JSON.parse(localStorage.getItem('files')) || [];
 
-  function login() {
-    const pass = document.getElementById('password').value;
+function goWA() {
+  window.location.href = "https://whatsapp.com/channel/0029Vb1emh39Gv7QRTZwp02u";
+}
 
-    if (pass === ADMIN_PASSWORD) {
-      isUnlocked = true;
-      alert('Upload terbuka!');
-
-      document.getElementById('fileInput').style.display = 'block';
-      document.getElementById('uploadBtn').style.display = 'inline-block';
-    } else {
-      alert('Password salah!');
-    }
+function login() {
+  if (document.getElementById('pass').value === PASSWORD) {
+    unlocked = true;
+    document.getElementById('file').style.display = 'block';
+    document.getElementById('btn').style.display = 'inline-block';
+    alert('Upload kebuka!');
+  } else {
+    alert('Password salah!');
   }
+}
 
-  function uploadFile() {
-    if (!isUnlocked) {
-      alert('Harus login dulu!');
-      return;
-    }
+async function upload() {
+  if (!unlocked) return alert('Login dulu!');
 
-    const input = document.getElementById('fileInput');
-    const file = input.files[0];
+  const file = document.getElementById('file').files[0];
+  if (!file) return alert('Pilih file!');
 
-    if (!file) {
-      alert('Pilih file dulu!');
-      return;
-    }
+  const formData = new FormData();
+  formData.append('reqtype', 'fileupload');
+  formData.append('fileToUpload', file);
 
-    const reader = new FileReader();
+  const res = await fetch('https://catbox.moe/user/api.php', {
+    method: 'POST',
+    body: formData
+  });
 
-    reader.onload = function(e) {
-      const fileData = {
-        name: file.name,
-        url: e.target.result
-      };
+  const link = await res.text();
 
-      files.push(fileData);
-      localStorage.setItem('myFiles', JSON.stringify(files));
+  files.push({ name: file.name, url: link });
+  localStorage.setItem('files', JSON.stringify(files));
 
-      renderFiles();
-    };
+  render();
+}
 
-    reader.readAsDataURL(file);
-  }
+function render() {
+  const list = document.getElementById('list');
+  list.innerHTML = '';
 
-  function renderFiles() {
-    const list = document.getElementById('fileList');
-    list.innerHTML = '';
+  files.forEach(f => {
+    const li = document.createElement('li');
+    li.innerHTML = `${f.name} - <a href=\"${f.url}\" target=\"_blank\">Download</a>`;
+    list.appendChild(li);
+  });
+}
 
-    files.forEach(file => {
-      const li = document.createElement('li');
+render();
+</script>
 
-      const name = document.createElement('span');
-      name.textContent = file.name;
-
-      const link = document.createElement('a');
-      link.href = file.url;
-      link.download = file.name;
-      link.textContent = 'Download';
-
-      li.appendChild(name);
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-  }
-
-  // langsung tampilkan file saat halaman dibuka (public)
-  renderFiles();
-</script></body>
+</body>
 </html>
