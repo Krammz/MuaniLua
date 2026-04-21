@@ -26,11 +26,8 @@
     }
 
     .top-bar {
-      display:flex;
-      justify-content:center;
-      gap:10px;
+      text-align:center;
       margin-bottom:20px;
-      flex-wrap:wrap;
     }
 
     .btn {
@@ -42,6 +39,7 @@
       cursor:pointer;
       text-decoration:none;
       box-shadow:0 0 10px #ff2d2d;
+      display:inline-block;
     }
 
     .btn.secondary {
@@ -107,12 +105,14 @@ function loadFiles(){
   empty.style.display = "none";
 
   stored.forEach(file => {
+    if(!file.name || !file.data) return; // skip error lama
+
     let div = document.createElement("div");
     div.className = "file-card";
 
     div.innerHTML = `
       <div class="file-name">${file.name}</div>
-      <a href="${file.url}" download class="btn">Download</a>
+      <a href="${file.data}" download="${file.name}" class="btn">Download</a>
     `;
 
     list.appendChild(div);
