@@ -1,150 +1,281 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MUANI</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MUANI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif;}
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    body {
+      background: #0a0a0a;
+      color: #fff;
+      overflow-x: hidden;
+    }
 
-<style>
-* {margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif;}
+    /* ================= TAMBAHAN SIDEBAR ================= */
+    .sidebar {
+      position: fixed;
+      left: -260px;
+      top: 0;
+      width: 250px;
+      height: 100%;
+      background: #111;
+      box-shadow: 0 0 20px rgba(255,45,45,0.3);
+      padding: 20px;
+      transition: 0.3s;
+      overflow-y: auto;
+      z-index: 999;
+    }
 
-body {
-  background:#0a0a0a;
-  color:#fff;
-  display:flex;
-}
+    .sidebar.active {
+      left: 0;
+    }
 
-/* SIDEBAR */
-.sidebar {
-  width:220px;
-  background:#111;
-  height:100vh;
-  padding:20px;
-  border-right:2px solid #ff2d2d;
-}
+    .sidebar h2 {
+      color: #ff2d2d;
+      margin-bottom: 10px;
+    }
 
-.sidebar h2 {
-  color:#ff2d2d;
-  margin-bottom:15px;
-}
+    .file-list {
+      margin-top: 10px;
+      font-size: 14px;
+    }
 
-.file-list {
-  margin-top:10px;
-}
+    .file-item {
+      padding: 5px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
 
-.file-item {
-  background:#222;
-  padding:8px;
-  border-radius:8px;
-  margin-bottom:8px;
-  font-size:14px;
-}
+    /* tombol buka sidebar */
+    .open-sidebar {
+      position: fixed;
+      left: 10px;
+      top: 10px;
+      background: #ff2d2d;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 10px;
+      color: #fff;
+      cursor: pointer;
+      z-index: 1000;
+    }
 
-/* MAIN */
-.main {
-  flex:1;
-  padding:20px;
-  text-align:center;
-}
+    .container {
+      padding: 20px;
+      text-align: center;
+    }
 
-.logo {
-  width:140px;
-  height:140px;
-  border-radius:50%;
-  margin:20px auto;
-  background:url('logo.jpg') center/cover;
-  border:3px solid #ff2d2d;
-  box-shadow:0 0 25px #ff2d2d;
-}
+    .logo {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      margin: 20px auto;
+      background: url('logo.jpg') center/cover;
+      border: 3px solid #ff2d2d;
+      box-shadow: 0 0 25px #ff2d2d;
+    }
 
-h1 { color:#ff2d2d; }
+    h1 {
+      color: #ff2d2d;
+      font-size: 32px;
+      margin-top: 10px;
+    }
 
-.hero {
-  background:rgba(255,45,45,0.1);
-  padding:20px;
-  border-radius:20px;
-  margin-top:20px;
-}
+    .subtitle {
+      opacity: 0.7;
+      margin-bottom: 20px;
+    }
 
-.btn {
-  padding:10px 20px;
-  background:#ff2d2d;
-  border:none;
-  color:#fff;
-  border-radius:20px;
-  cursor:pointer;
-  margin:5px;
-}
+    .hero {
+      background: rgba(255, 45, 45, 0.1);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255,45,45,0.3);
+    }
 
-/* hidden input */
-#fileInput {
-  display:none;
-}
-</style>
+    .btn-group {
+      margin-top:15px;
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn {
+      padding:10px 20px;
+      background:#ff2d2d;
+      color:#fff;
+      border-radius:20px;
+      text-decoration:none;
+      box-shadow:0 0 15px #ff2d2d;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn.secondary {
+      background:#222;
+      box-shadow:0 0 10px #ff2d2d;
+    }
+
+    .hero h2 {
+      color: #ff2d2d;
+      margin-bottom: 10px;
+    }
+
+    .cards {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+      gap:15px;
+      margin-top:25px;
+    }
+
+    .card {
+      background:#111;
+      padding:20px;
+      border-radius:15px;
+      box-shadow:0 0 10px rgba(255,45,45,0.2);
+    }
+
+    .card h3 {
+      color:#ff2d2d;
+      margin-bottom:5px;
+    }
+
+    .stats {
+      display:flex;
+      justify-content:space-around;
+      margin-top:25px;
+    }
+
+    .stat {
+      background:#111;
+      padding:15px;
+      border-radius:15px;
+      width:100px;
+      box-shadow:0 0 10px rgba(255,45,45,0.2);
+    }
+
+    .stat h2 {
+      color:#ff2d2d;
+    }
+
+    footer {
+      margin-top:30px;
+      opacity:0.5;
+      font-size:12px;
+    }
+
+    /* input file hidden */
+    #fileInput {
+      display: none;
+    }
+
+  </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-  <h2>📂 Jelajahi</h2>
-  <div class="file-list" id="fileList"></div>
+<!-- ================= SIDEBAR ================= -->
+<div class="sidebar" id="sidebar">
+  <h2>Jelajahi File</h2>
+  <div id="fileList" class="file-list"></div>
 </div>
 
-<!-- MAIN -->
-<div class="main">
+<button class="open-sidebar" onclick="toggleSidebar()">☰</button>
+
+<div class="container">
 
   <div class="logo"></div>
   <h1>MUANI</h1>
-  <p>Komunitas Modder & Scripter SAMP Indonesia</p>
+
+  <div class="subtitle">Komunitas Modder & Scripter SAMP Indonesia</div>
 
   <div class="hero">
-    <h2>Selamat Datang</h2>
-    <p>Upload dan kelola file kamu di sini</p>
+    <h2>Selamat Datang di MUANI</h2>
+    <p>Website komunitas SAMP dengan mod dan script terbaik.</p>
 
-    <button class="btn" onclick="document.getElementById('fileInput').click()">
-      Upload File
-    </button>
+    <div class="btn-group">
+      <!-- TOMBOL JELAJAHI (OPEN SIDEBAR) -->
+      <button class="btn" onclick="toggleSidebar()">Jelajahi</button>
 
-    <input type="file" id="fileInput">
+      <!-- TOMBOL UPLOAD BARU -->
+      <button class="btn secondary" onclick="document.getElementById('fileInput').click()">
+        Upload File
+      </button>
+
+      <input type="file" id="fileInput" multiple onchange="uploadFile(event)">
+    </div>
   </div>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Safe & Legit</h3>
+      <p>Mod aman untuk server</p>
+    </div>
+
+    <div class="card">
+      <h3>Ringan</h3>
+      <p>Optimasi tanpa drop FPS</p>
+    </div>
+
+    <div class="card">
+      <h3>Komunitas Aktif</h3>
+      <p>Discord & WhatsApp</p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <h2>18</h2>
+      <p>Script</p>
+    </div>
+
+    <div class="stat">
+      <h2>6</h2>
+      <p>Mod</p>
+    </div>
+  </div>
+
+  <footer>
+    © 2026 MUANI Community
+  </footer>
 
 </div>
 
+<!-- ================= SCRIPT ================= -->
 <script>
-const fileInput = document.getElementById("fileInput");
-const fileList = document.getElementById("fileList");
+function toggleSidebar() {
+  document.getElementById("sidebar").classList.toggle("active");
+}
 
-// Load dari localStorage
-let files = JSON.parse(localStorage.getItem("files")) || [];
+function uploadFile(event) {
+  const files = event.target.files;
+  let stored = JSON.parse(localStorage.getItem("files")) || [];
 
-// render list
-function renderFiles() {
-  fileList.innerHTML = "";
-  files.forEach(f => {
+  for (let i = 0; i < files.length; i++) {
+    stored.push(files[i].name);
+  }
+
+  localStorage.setItem("files", JSON.stringify(stored));
+  loadFiles();
+}
+
+function loadFiles() {
+  const list = document.getElementById("fileList");
+  list.innerHTML = "";
+
+  let stored = JSON.parse(localStorage.getItem("files")) || [];
+
+  stored.forEach(file => {
     let div = document.createElement("div");
     div.className = "file-item";
-    div.textContent = f;
-    fileList.appendChild(div);
+    div.textContent = file;
+    list.appendChild(div);
   });
 }
 
-// saat upload
-fileInput.addEventListener("change", function() {
-  const file = fileInput.files[0];
-  if (!file) return;
-
-  files.push(file.name);
-
-  localStorage.setItem("files", JSON.stringify(files));
-
-  renderFiles();
-});
-
-// init
-renderFiles();
+window.onload = loadFiles;
 </script>
 
 </body>
