@@ -13,54 +13,6 @@
       overflow-x: hidden;
     }
 
-    /* ================= TAMBAHAN SIDEBAR ================= */
-    .sidebar {
-      position: fixed;
-      left: -260px;
-      top: 0;
-      width: 250px;
-      height: 100%;
-      background: #111;
-      box-shadow: 0 0 20px rgba(255,45,45,0.3);
-      padding: 20px;
-      transition: 0.3s;
-      overflow-y: auto;
-      z-index: 999;
-    }
-
-    .sidebar.active {
-      left: 0;
-    }
-
-    .sidebar h2 {
-      color: #ff2d2d;
-      margin-bottom: 10px;
-    }
-
-    .file-list {
-      margin-top: 10px;
-      font-size: 14px;
-    }
-
-    .file-item {
-      padding: 5px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-
-    /* tombol buka sidebar */
-    .open-sidebar {
-      position: fixed;
-      left: 10px;
-      top: 10px;
-      background: #ff2d2d;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 10px;
-      color: #fff;
-      cursor: pointer;
-      z-index: 1000;
-    }
-
     .container {
       padding: 20px;
       text-align: center;
@@ -109,8 +61,6 @@
       border-radius:20px;
       text-decoration:none;
       box-shadow:0 0 15px #ff2d2d;
-      cursor: pointer;
-      border: none;
     }
 
     .btn.secondary {
@@ -121,6 +71,17 @@
     .hero h2 {
       color: #ff2d2d;
       margin-bottom: 10px;
+    }
+
+    .btn {
+      display:inline-block;
+      margin-top:15px;
+      padding:10px 20px;
+      background:#ff2d2d;
+      color:#fff;
+      border-radius:20px;
+      text-decoration:none;
+      box-shadow:0 0 15px #ff2d2d;
     }
 
     .cards {
@@ -165,28 +126,14 @@
       opacity:0.5;
       font-size:12px;
     }
-
-    /* input file hidden */
-    #fileInput {
-      display: none;
-    }
-
   </style>
 </head>
 
 <body>
-
-<!-- ================= SIDEBAR ================= -->
-<div class="sidebar" id="sidebar">
-  <h2>Jelajahi File</h2>
-  <div id="fileList" class="file-list"></div>
-</div>
-
-<button class="open-sidebar" onclick="toggleSidebar()">☰</button>
-
 <div class="container">
 
   <div class="logo"></div>
+
   <h1>MUANI</h1>
 
   <div class="subtitle">Komunitas Modder & Scripter SAMP Indonesia</div>
@@ -196,15 +143,16 @@
     <p>Website komunitas SAMP dengan mod dan script terbaik.</p>
 
     <div class="btn-group">
-      <!-- TOMBOL JELAJAHI (OPEN SIDEBAR) -->
-      <button class="btn" onclick="toggleSidebar()">Jelajahi</button>
+      <!-- DIUBAH LINKNYA KE HALAMAN BARU -->
+      <a href="jelajahi.html" class="btn">Jelajahi</a>
 
-      <!-- TOMBOL UPLOAD BARU -->
+      <!-- TOMBOL UPLOAD TAMBAHAN -->
       <button class="btn secondary" onclick="document.getElementById('fileInput').click()">
         Upload File
       </button>
 
-      <input type="file" id="fileInput" multiple onchange="uploadFile(event)">
+      <!-- INPUT FILE (HIDDEN) -->
+      <input type="file" id="fileInput" multiple style="display:none" onchange="uploadFile(event)">
     </div>
   </div>
 
@@ -243,39 +191,25 @@
 
 </div>
 
-<!-- ================= SCRIPT ================= -->
+<!-- ================= TAMBAHAN SCRIPT ================= -->
 <script>
-function toggleSidebar() {
-  document.getElementById("sidebar").classList.toggle("active");
-}
-
-function uploadFile(event) {
+function uploadFile(event){
   const files = event.target.files;
   let stored = JSON.parse(localStorage.getItem("files")) || [];
 
-  for (let i = 0; i < files.length; i++) {
-    stored.push(files[i].name);
+  for(let i=0;i<files.length;i++){
+    const url = URL.createObjectURL(files[i]);
+
+    stored.push({
+      name: files[i].name,
+      url: url
+    });
   }
 
   localStorage.setItem("files", JSON.stringify(stored));
-  loadFiles();
+
+  alert("File berhasil diupload!");
 }
-
-function loadFiles() {
-  const list = document.getElementById("fileList");
-  list.innerHTML = "";
-
-  let stored = JSON.parse(localStorage.getItem("files")) || [];
-
-  stored.forEach(file => {
-    let div = document.createElement("div");
-    div.className = "file-item";
-    div.textContent = file;
-    list.appendChild(div);
-  });
-}
-
-window.onload = loadFiles;
 </script>
 
 </body>
