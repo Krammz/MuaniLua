@@ -2,215 +2,114 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MUANI</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <title>Upload & Download File</title>
   <style>
-    * {margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif;}
-
     body {
-      background: #0a0a0a;
-      color: #fff;
-      overflow-x: hidden;
-    }
-
-    .container {
-      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
       text-align: center;
-    }
+      padding: 40px;
+    }.container {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  max-width: 500px;
+  margin: auto;
+}
 
-    .logo {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      margin: 20px auto;
-      background: url('logo.jpg') center/cover;
-      border: 3px solid #ff2d2d;
-      box-shadow: 0 0 25px #ff2d2d;
-    }
+input[type="file"] {
+  margin: 15px 0;
+}
 
-    h1 {
-      color: #ff2d2d;
-      font-size: 32px;
-      margin-top: 10px;
-    }
+button {
+  padding: 10px 15px;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-    .subtitle {
-      opacity: 0.7;
-      margin-bottom: 20px;
-    }
+button:hover {
+  background: #0056b3;
+}
 
-    .hero {
-      background: rgba(255, 45, 45, 0.1);
-      padding: 20px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(255,45,45,0.3);
-    }
+ul {
+  list-style: none;
+  padding: 0;
+}
 
-    .btn-group {
-      margin-top:15px;
-      display:flex;
-      justify-content:center;
-      gap:10px;
-      flex-wrap:wrap;
-    }
+li {
+  background: #eee;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    .btn {
-      padding:10px 20px;
-      background:#ff2d2d;
-      color:#fff;
-      border-radius:20px;
-      text-decoration:none;
-      box-shadow:0 0 15px #ff2d2d;
-    }
+a {
+  text-decoration: none;
+  color: #007bff;
+}
 
-    .btn.secondary {
-      background:#222;
-      box-shadow:0 0 10px #ff2d2d;
-    }
-
-    .hero h2 {
-      color: #ff2d2d;
-      margin-bottom: 10px;
-    }
-
-    .btn {
-      display:inline-block;
-      margin-top:15px;
-      padding:10px 20px;
-      background:#ff2d2d;
-      color:#fff;
-      border-radius:20px;
-      text-decoration:none;
-      box-shadow:0 0 15px #ff2d2d;
-    }
-
-    .cards {
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
-      gap:15px;
-      margin-top:25px;
-    }
-
-    .card {
-      background:#111;
-      padding:20px;
-      border-radius:15px;
-      box-shadow:0 0 10px rgba(255,45,45,0.2);
-    }
-
-    .card h3 {
-      color:#ff2d2d;
-      margin-bottom:5px;
-    }
-
-    .stats {
-      display:flex;
-      justify-content:space-around;
-      margin-top:25px;
-    }
-
-    .stat {
-      background:#111;
-      padding:15px;
-      border-radius:15px;
-      width:100px;
-      box-shadow:0 0 10px rgba(255,45,45,0.2);
-    }
-
-    .stat h2 {
-      color:#ff2d2d;
-    }
-
-    footer {
-      margin-top:30px;
-      opacity:0.5;
-      font-size:12px;
-    }
   </style>
 </head>
+<body><div class="container">
+  <h2>Upload File</h2>
+  <input type="file" id="fileInput">
+  <br>
+  <button onclick="uploadFile()">Upload</button>  <h3>Daftar File</h3>
+  <ul id="fileList"></ul>
+</div><script>
+  let files = [];
 
-<body>
-<div class="container">
+  function uploadFile() {
+    const input = document.getElementById('fileInput');
+    const file = input.files[0];
 
-  <div class="logo"></div>
+    if (!file) {
+      alert('Pilih file dulu!');
+      return;
+    }
 
-  <h1>MUANI</h1>
+    const reader = new FileReader();
 
-  <div class="subtitle">Komunitas Modder & Scripter SAMP Indonesia</div>
+    reader.onload = function(e) {
+      const fileData = {
+        name: file.name,
+        url: e.target.result
+      };
 
-  <div class="hero">
-    <h2>Selamat Datang di MUANI</h2>
-    <p>Website komunitas SAMP dengan mod dan script terbaik.</p>
+      files.push(fileData);
+      renderFiles();
+    };
 
-    <div class="btn-group">
-      <!-- DIUBAH LINKNYA KE HALAMAN BARU -->
-      <a href="jelajahi.html" class="btn">Jelajahi</a>
-
-      <!-- TOMBOL UPLOAD TAMBAHAN -->
-      <button class="btn secondary" onclick="document.getElementById('fileInput').click()">
-        Upload File
-      </button>
-
-      <!-- INPUT FILE (HIDDEN) -->
-      <input type="file" id="fileInput" multiple style="display:none" onchange="uploadFile(event)">
-    </div>
-  </div>
-
-  <div class="cards">
-    <div class="card">
-      <h3>Safe & Legit</h3>
-      <p>Mod aman untuk server</p>
-    </div>
-
-    <div class="card">
-      <h3>Ringan</h3>
-      <p>Optimasi tanpa drop FPS</p>
-    </div>
-
-    <div class="card">
-      <h3>Komunitas Aktif</h3>
-      <p>Discord & WhatsApp</p>
-    </div>
-  </div>
-
-  <div class="stats">
-    <div class="stat">
-      <h2>18</h2>
-      <p>Script</p>
-    </div>
-
-    <div class="stat">
-      <h2>6</h2>
-      <p>Mod</p>
-    </div>
-  </div>
-
-  <footer>
-    © 2026 MUANI Community
-  </footer>
-
-</div>
-
-<!-- ================= TAMBAHAN SCRIPT ================= -->
-<script>
-function uploadFile(event){
-  const files = event.target.files;
-  let stored = JSON.parse(localStorage.getItem("files")) || [];
-
-  for(let i=0;i<files.length;i++){
-    const url = URL.createObjectURL(files[i]);
-
-    stored.push({
-      name: files[i].name,
-      url: url
-    });
+    reader.readAsDataURL(file);
   }
 
-  localStorage.setItem("files", JSON.stringify(stored));
+  function renderFiles() {
+    const list = document.getElementById('fileList');
+    list.innerHTML = '';
 
-  alert("File berhasil diupload!");
-}
-</script>
+    files.forEach((file, index) => {
+      const li = document.createElement('li');
 
-</body>
+      const fileName = document.createElement('span');
+      fileName.textContent = file.name;
+
+      const downloadLink = document.createElement('a');
+      downloadLink.href = file.url;
+      downloadLink.download = file.name;
+      downloadLink.textContent = 'Download';
+
+      li.appendChild(fileName);
+      li.appendChild(downloadLink);
+
+      list.appendChild(li);
+    });
+  }
+</script></body>
 </html>
