@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MUANI - Komunitas SAMP</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #050b16;
+    color: white;
+    text-align: center;
+}
+
+/* Glow effect */
+.glow {
+    color: #00ffae;
+    text-shadow: 0 0 10px #00ffae, 0 0 20px #00ffae;
+}
+
+/* Header */
+.header {
+    padding: 40px 20px;
+}
+
+.logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #00ffae;
+    box-shadow: 0 0 20px #00ffae;
+    margin-bottom: 15px;
+}
+
+/* Welcome Box */
+.welcome {
+    margin: 20px;
+    padding: 30px;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #0a1a2f, #07101d);
+    box-shadow: 0 0 30px rgba(0,255,174,0.2);
+}
+
+.button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #00ffae;
+    color: black;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 0 15px #00ffae;
+}
+
+/* Cards */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    background: #0a1a2f;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0,255,174,0.1);
+}
+
+.card h3 {
+    margin-bottom: 10px;
+    color: #00ffae;
+}
+
+/* Stats */
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px;
+}
+
+.stat {
+    background: #0a1a2f;
+    padding: 20px;
+    border-radius: 15px;
+    width: 120px;
+    box-shadow: 0 0 20px rgba(0,255,174,0.2);
+}
+
+.stat h2 {
+    color: #00ffae;
+}
+
+/* Footer */
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    font-size: 14px;
+    color: #aaa;
+}
+</style>
+
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    <img src="https://via.placeholder.com/120" class="logo">
+    <h1 class="glow">MUANI</h1>
+    <p>Persatuan Muani SAMP Indonesia</p>
+</div>
+
+<!-- Welcome -->
+<div class="welcome">
+    <h2 class="glow">Selamat Datang di MUANI</h2>
+    <p>Komunitas Modder & Scripter SAMP Indonesia</p>
+    <a href="#" class="button">Jelajahi Koleksi</a>
+    <p style="margin-top:10px;">Total Kunjungan: <b style="color:#00ffae;">466</b></p>
+</div>
+
+<!-- Cards -->
+<div class="container">
+    <div class="card">
+        <h3>Safe & Legit</h3>
+        <p>Mod aman untuk server SAMP</p>
+    </div>
+
+    <div class="card">
+        <h3>Lightweight</h3>
+        <p>Optimasi PC & Android tanpa drop fps</p>
+    </div>
+
+    <div class="card">
+        <h3>Komunitas Aktif</h3>
+        <p>Discord & WhatsApp</p>
+    </div>
+</div>
+
+<!-- Stats -->
+<div class="stats">
+    <div class="stat">
+        <h2>18</h2>
+        <p>Total Script</p>
+    </div>
+
+    <div class="stat">
+        <h2>6</h2>
+        <p>Total Mod</p>
+    </div>
+</div>
+
+<footer>
+    © 2026 MUANI Community
+</footer>
+
+</body>
+</html>
