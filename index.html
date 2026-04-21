@@ -3,166 +3,209 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MUANI - Komunitas SAMP</title>
+<title>MUANI</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
 body {
-    background: #050b16;
-    color: white;
-    text-align: center;
+    margin:0;
+    font-family:Poppins;
+    background:#050b16;
+    color:white;
 }
 
-/* Glow effect */
-.glow {
-    color: #00ffae;
-    text-shadow: 0 0 10px #00ffae, 0 0 20px #00ffae;
+/* LOGIN */
+#login {
+    display:flex;
+    height:100vh;
+    justify-content:center;
+    align-items:center;
 }
 
-/* Header */
-.header {
-    padding: 40px 20px;
+.login-box {
+    background:#0a1a2f;
+    padding:30px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 0 20px #00ffae;
 }
 
-.logo {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    border: 3px solid #00ffae;
-    box-shadow: 0 0 20px #00ffae;
-    margin-bottom: 15px;
+input, select, textarea {
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    border-radius:10px;
+    border:none;
+    background:#081420;
+    color:white;
 }
 
-/* Welcome Box */
-.welcome {
-    margin: 20px;
-    padding: 30px;
-    border-radius: 20px;
-    background: linear-gradient(145deg, #0a1a2f, #07101d);
-    box-shadow: 0 0 30px rgba(0,255,174,0.2);
+button {
+    margin-top:15px;
+    padding:10px;
+    border:none;
+    border-radius:10px;
+    background:#00ffae;
+    cursor:pointer;
 }
 
-.button {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 20px;
-    background: #00ffae;
-    color: black;
-    border-radius: 25px;
-    text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0 0 15px #00ffae;
+/* MAIN */
+#app { display:none; }
+
+/* SIDEBAR */
+.sidebar {
+    position:fixed;
+    width:220px;
+    height:100%;
+    background:#0a1a2f;
+    padding:20px;
 }
 
-/* Cards */
-.container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 20px;
+.sidebar a {
+    display:block;
+    margin:10px 0;
+    color:white;
+    text-decoration:none;
 }
 
+/* CONTENT */
+.content {
+    margin-left:240px;
+    padding:20px;
+}
+
+/* CARD */
 .card {
-    background: #0a1a2f;
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 0 20px rgba(0,255,174,0.1);
+    background:#0a1a2f;
+    padding:20px;
+    border-radius:15px;
+    margin-top:10px;
+    box-shadow:0 0 10px rgba(0,255,174,0.2);
 }
 
-.card h3 {
-    margin-bottom: 10px;
-    color: #00ffae;
-}
-
-/* Stats */
-.stats {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding: 30px;
-}
-
-.stat {
-    background: #0a1a2f;
-    padding: 20px;
-    border-radius: 15px;
-    width: 120px;
-    box-shadow: 0 0 20px rgba(0,255,174,0.2);
-}
-
-.stat h2 {
-    color: #00ffae;
-}
-
-/* Footer */
-footer {
-    margin-top: 40px;
-    padding: 20px;
-    font-size: 14px;
-    color: #aaa;
+/* GRID */
+.grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:10px;
 }
 </style>
 
 </head>
 <body>
 
-<!-- Header -->
-<div class="header">
-    <img src="https://via.placeholder.com/120" class="logo">
-    <h1 class="glow">MUANI</h1>
-    <p>Persatuan Muani SAMP Indonesia</p>
-</div>
-
-<!-- Welcome -->
-<div class="welcome">
-    <h2 class="glow">Selamat Datang di MUANI</h2>
-    <p>Komunitas Modder & Scripter SAMP Indonesia</p>
-    <a href="#" class="button">Jelajahi Koleksi</a>
-    <p style="margin-top:10px;">Total Kunjungan: <b style="color:#00ffae;">466</b></p>
-</div>
-
-<!-- Cards -->
-<div class="container">
-    <div class="card">
-        <h3>Safe & Legit</h3>
-        <p>Mod aman untuk server SAMP</p>
-    </div>
-
-    <div class="card">
-        <h3>Lightweight</h3>
-        <p>Optimasi PC & Android tanpa drop fps</p>
-    </div>
-
-    <div class="card">
-        <h3>Komunitas Aktif</h3>
-        <p>Discord & WhatsApp</p>
+<!-- LOGIN -->
+<div id="login">
+    <div class="login-box">
+        <h2>Login MUANI</h2>
+        <input type="password" id="pass" placeholder="Masukkan Password">
+        <button onclick="login()">Masuk</button>
     </div>
 </div>
 
-<!-- Stats -->
-<div class="stats">
-    <div class="stat">
-        <h2>18</h2>
-        <p>Total Script</p>
-    </div>
+<!-- APP -->
+<div id="app">
 
-    <div class="stat">
-        <h2>6</h2>
-        <p>Total Mod</p>
-    </div>
+<div class="sidebar">
+    <h3>MUANI</h3>
+    <a href="#" onclick="showPage('home')">Home</a>
+    <a href="#" onclick="showPage('koleksi')">Koleksi</a>
+    <a href="#" onclick="showPage('upload')">Upload</a>
 </div>
 
-<footer>
-    © 2026 MUANI Community
-</footer>
+<div class="content">
+
+<!-- HOME -->
+<div id="home">
+    <h1>Selamat Datang di MUANI</h1>
+    <p>Klik menu untuk mulai</p>
+</div>
+
+<!-- KOLEKSI -->
+<div id="koleksi" style="display:none;">
+    <h2>Jelajahi Koleksi</h2>
+    <div id="list" class="grid"></div>
+</div>
+
+<!-- UPLOAD -->
+<div id="upload" style="display:none;">
+    <h2>Upload Script / Mod</h2>
+
+    <input id="nama" placeholder="Nama">
+    <input id="versi" placeholder="Versi">
+    <input id="author" placeholder="Author">
+    <input id="link" placeholder="Link Download">
+    <textarea id="desk" placeholder="Deskripsi"></textarea>
+
+    <button onclick="upload()">Upload</button>
+</div>
+
+</div>
+</div>
+
+<script>
+
+// LOGIN
+function login(){
+    let p = document.getElementById("pass").value;
+    if(p === "121"){
+        document.getElementById("login").style.display="none";
+        document.getElementById("app").style.display="block";
+        loadData();
+    } else {
+        alert("Password salah!");
+    }
+}
+
+// NAV
+function showPage(page){
+    document.getElementById("home").style.display="none";
+    document.getElementById("koleksi").style.display="none";
+    document.getElementById("upload").style.display="none";
+
+    document.getElementById(page).style.display="block";
+}
+
+// UPLOAD
+function upload(){
+    let data = {
+        nama: nama.value,
+        versi: versi.value,
+        author: author.value,
+        link: link.value,
+        desk: desk.value
+    };
+
+    let db = JSON.parse(localStorage.getItem("muani")) || [];
+    db.push(data);
+    localStorage.setItem("muani", JSON.stringify(db));
+
+    alert("Berhasil upload!");
+    loadData();
+}
+
+// LOAD DATA
+function loadData(){
+    let list = document.getElementById("list");
+    list.innerHTML="";
+
+    let db = JSON.parse(localStorage.getItem("muani")) || [];
+
+    db.forEach(item=>{
+        list.innerHTML += `
+        <div class="card">
+            <h3>${item.nama}</h3>
+            <p>${item.desk}</p>
+            <small>Versi: ${item.versi}</small><br>
+            <small>By: ${item.author}</small><br>
+            <a href="${item.link}" target="_blank">Download</a>
+        </div>
+        `;
+    });
+}
+
+</script>
 
 </body>
 </html>
