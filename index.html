@@ -44,6 +44,28 @@ h1 {
   box-shadow: 0 0 20px rgba(255,45,45,0.3);
 }
 
+.btn-group {
+  margin-top:15px;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.btn {
+  padding:10px 20px;
+  background:#ff2d2d;
+  color:#fff;
+  border-radius:20px;
+  text-decoration:none;
+  box-shadow:0 0 15px #ff2d2d;
+}
+
+.btn.secondary {
+  background:#222;
+  box-shadow:0 0 10px #ff2d2d;
+}
+
 .hero h2 {
   color: #ff2d2d;
   margin-bottom: 10px;
@@ -109,7 +131,10 @@ footer {
   <div class="subtitle">Komunitas Modder & Scripter SAMP Indonesia</div>  <div class="hero">
     <h2>Selamat Datang di MUANI</h2>
     <p>Website komunitas SAMP dengan mod dan script terbaik.</p>
-    <a href="#" class="btn">Jelajahi</a>
+    <div class="btn-group">
+      <a href="#" class="btn">Jelajahi</a>
+      <a href="upload.html" class="btn secondary">Upload File</a>
+    </div>
   </div>  <div class="cards">
     <div class="card">
       <h3>Safe & Legit</h3>
