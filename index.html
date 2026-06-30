@@ -1,609 +1,560 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lua Obfuscator Pro 🚀</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lua Obfuscator · WeAreDevs API</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
-            font-family: 'Courier New', monospace;
-            background: #0a0a0f;
+            background: #0b0d11;
             min-height: 100vh;
             display: flex;
+            align-items: center;
             justify-content: center;
-            align-items: center;
+            font-family: 'Inter', sans-serif;
             padding: 20px;
-            background-image:
-                radial-gradient(ellipse at 10% 20%, rgba(0, 255, 200, 0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 90% 80%, rgba(255, 0, 200, 0.05) 0%, transparent 50%);
         }
-
-        /* ===== GLOW CARD ===== */
-        .glow-card {
-            position: relative;
-            background: rgba(15, 15, 25, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            padding: 40px;
-            max-width: 1000px;
+        .glass {
+            background: rgba(18, 22, 30, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 40px;
+            padding: 40px 35px;
+            max-width: 920px;
             width: 100%;
-            border: 1px solid rgba(0, 255, 200, 0.15);
-            box-shadow: 0 0 60px rgba(0, 255, 200, 0.05), inset 0 0 60px rgba(0, 255, 200, 0.02);
-            transition: border-color 0.3s;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+            transition: all 0.25s ease;
         }
-
-        .glow-card:hover {
-            border-color: rgba(0, 255, 200, 0.3);
-        }
-
-        /* ===== HEADER ===== */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .logo-icon {
-            font-size: 36px;
-            filter: drop-shadow(0 0 20px rgba(0, 255, 200, 0.3));
-        }
-
-        .logo h1 {
-            font-size: 26px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #00ffc8, #00a3ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
-        }
-
-        .logo .sub {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.3);
-            -webkit-text-fill-color: rgba(255, 255, 255, 0.3);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-top: 2px;
-        }
-
         .badge {
-            background: rgba(0, 255, 200, 0.08);
-            border: 1px solid rgba(0, 255, 200, 0.15);
-            border-radius: 100px;
-            padding: 6px 18px;
-            font-size: 11px;
-            color: #00ffc8;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* ===== STATS BAR ===== */
-        .stats {
-            display: flex;
-            gap: 25px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-            padding: 15px 20px;
-            background: rgba(0, 255, 200, 0.03);
-            border-radius: 16px;
-            border: 1px solid rgba(0, 255, 200, 0.05);
-        }
-
-        .stat-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .stat-item .label {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .stat-item .value {
-            font-size: 16px;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .stat-item .value.cyan {
-            color: #00ffc8;
-        }
-        .stat-item .value.pink {
-            color: #ff6b9d;
-        }
-        .stat-item .value.green {
-            color: #6bff8a;
-        }
-
-        /* ===== TEXTAREA ===== */
-        .editor-group {
+            gap: 12px;
             margin-bottom: 20px;
         }
-
-        .editor-group label {
-            display: block;
-            font-size: 12px;
+        .badge span {
+            background: #1e2636;
+            padding: 6px 18px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.4px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: rgba(255, 255, 255, 0.3);
-            margin-bottom: 10px;
+            color: #8b9bb5;
+            border: 1px solid rgba(255, 255, 255, 0.04);
         }
-
-        .editor-group label span {
-            color: #00ffc8;
+        .badge .live {
+            background: #1f3a2f;
+            color: #5fe28c;
+            border-color: #2b6b47;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-
-        textarea {
-            width: 100%;
-            padding: 18px 20px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 14px;
-            color: #b8c7d9;
-            font-family: 'Courier New', monospace;
+        .badge .live::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #5fe28c;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #5fe28c88;
+            animation: pulse-dot 1.8s infinite;
+        }
+        @keyframes pulse-dot {
+            0% { opacity: 0.5; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.5; transform: scale(0.9); }
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #f0f4ff;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        h1 small {
+            font-size: 15px;
+            font-weight: 500;
+            color: #677b9c;
+            letter-spacing: 0px;
+            background: #181f2b;
+            padding: 2px 16px;
+            border-radius: 40px;
+            border: 1px solid #2a3345;
+        }
+        .sub {
+            color: #7d8daa;
             font-size: 14px;
-            line-height: 1.7;
+            font-weight: 400;
+            margin-bottom: 28px;
+            border-left: 3px solid #2f6b4a;
+            padding-left: 18px;
+            background: linear-gradient(90deg, #131a24, transparent);
+            border-radius: 0 8px 8px 0;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+        .input-area {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .input-area label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #b3c5e6;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .input-area label i {
+            font-style: normal;
+            background: #1f283a;
+            padding: 0 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            color: #6a7fa0;
+        }
+        textarea, select {
+            background: #0f141e;
+            border: 1px solid #232d40;
+            border-radius: 18px;
+            padding: 16px 18px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: #e6edff;
             resize: vertical;
-            min-height: 180px;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            transition: 0.2s;
+            width: 100%;
             outline: none;
         }
-
-        textarea:focus {
-            border-color: rgba(0, 255, 200, 0.3);
-            box-shadow: 0 0 30px rgba(0, 255, 200, 0.03);
+        textarea {
+            min-height: 190px;
+            line-height: 1.6;
         }
-
-        textarea::placeholder {
-            color: rgba(255, 255, 255, 0.12);
+        textarea:focus, select:focus {
+            border-color: #4f8bff;
+            box-shadow: 0 0 0 3px rgba(79, 139, 255, 0.15);
         }
-
-        /* ===== BUTTONS ===== */
-        .actions {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin: 20px 0 25px;
-        }
-
-        .btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 12px;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237d8daa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+            padding-right: 44px;
             cursor: pointer;
-            transition: all 0.25s ease;
+        }
+        .btn-group {
             display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 18px 0 16px;
+        }
+        .btn {
+            background: #1c263b;
+            border: none;
+            border-radius: 60px;
+            padding: 14px 34px;
+            font-weight: 600;
+            font-size: 15px;
+            color: #c8d6f0;
+            display: inline-flex;
             align-items: center;
             gap: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid #2b354d;
+            flex: 1 1 auto;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
         }
-
         .btn-primary {
-            background: linear-gradient(135deg, #00ffc8, #00a3ff);
-            color: #0a0a0f;
-            box-shadow: 0 0 30px rgba(0, 255, 200, 0.15);
+            background: #2d6aff;
+            border-color: #3d7aff;
+            color: #fff;
+            box-shadow: 0 6px 20px rgba(45, 106, 255, 0.25);
         }
-
         .btn-primary:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 0 50px rgba(0, 255, 200, 0.25);
+            background: #3f7aff;
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(45, 106, 255, 0.35);
         }
-
-        .btn-primary:active {
-            transform: scale(0.97);
-        }
-
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.04);
-            color: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: #1b2335;
+            border-color: #2d374f;
         }
-
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.08);
+            background: #26314b;
+            border-color: #3b4868;
+        }
+        .btn-danger {
+            background: #a0343a;
+            border-color: #c14248;
             color: #fff;
         }
-
-        .btn-danger {
-            background: rgba(255, 50, 100, 0.08);
-            color: #ff6b9d;
-            border: 1px solid rgba(255, 50, 100, 0.12);
-        }
-
         .btn-danger:hover {
-            background: rgba(255, 50, 100, 0.15);
+            background: #c14248;
         }
-
-        .btn-success {
-            background: rgba(50, 255, 100, 0.08);
-            color: #6bff8a;
-            border: 1px solid rgba(50, 255, 100, 0.12);
+        .output-wrap {
+            background: #0a0e17;
+            border-radius: 24px;
+            padding: 6px;
+            border: 1px solid #1d263a;
+            margin-top: 16px;
+            position: relative;
         }
-
-        .btn-success:hover {
-            background: rgba(50, 255, 100, 0.15);
-        }
-
-        /* ===== OUTPUT ===== */
-        .output-area {
-            margin-top: 5px;
-        }
-
-        .output-area .output-header {
+        .output-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .output-area .output-header label {
+            padding: 12px 20px 6px 20px;
             font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        .output-area .output-header .copy-hint {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.15);
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .output-area .output-header .copy-hint:hover {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        #output {
-            min-height: 180px;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(0, 255, 200, 0.06);
-        }
-
-        #output:focus {
-            border-color: rgba(0, 255, 200, 0.2);
-        }
-
-        /* ===== FOOTER ===== */
-        .footer {
-            margin-top: 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        .footer .credit {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            color: #5c6f91;
             letter-spacing: 0.5px;
         }
-
-        .footer .credit span {
-            color: rgba(0, 255, 200, 0.2);
+        .output-header span {
+            background: #131b28;
+            padding: 3px 14px;
+            border-radius: 30px;
+            border: 1px solid #263042;
         }
-
-        .footer .version {
-            font-size: 10px;
-            color: rgba(255, 255, 255, 0.06);
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        .output-body {
+            background: #070b12;
+            border-radius: 18px;
+            padding: 22px 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            color: #cfdfff;
+            white-space: pre-wrap;
+            word-break: break-word;
+            min-height: 120px;
+            max-height: 340px;
+            overflow-y: auto;
+            border: 1px solid #181f30;
         }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 600px) {
-            .glow-card {
-                padding: 24px;
-            }
-
-            .logo h1 {
-                font-size: 20px;
-            }
-
-            .stats {
-                gap: 12px;
-                padding: 12px 16px;
-            }
-
-            .stat-item .value {
-                font-size: 14px;
-            }
-
-            .btn {
-                padding: 10px 20px;
-                font-size: 11px;
-                width: 100%;
-                justify-content: center;
-            }
-
-            .actions {
-                flex-direction: column;
-            }
-
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+        .output-body .placeholder {
+            color: #3b4a66;
+            font-style: italic;
+            font-weight: 400;
         }
-
-        /* ===== SCROLLBAR ===== */
+        .footer-meta {
+            margin-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #3d4f6e;
+            border-top: 1px solid #1a2335;
+            padding-top: 20px;
+        }
+        .footer-meta .tag {
+            background: #111b2a;
+            padding: 4px 16px;
+            border-radius: 40px;
+            border: 1px solid #253040;
+            color: #7b8fb3;
+        }
         ::-webkit-scrollbar {
-            width: 4px;
+            width: 5px;
+            height: 5px;
         }
-
         ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: rgba(0, 255, 200, 0.15);
+            background: #0e141f;
             border-radius: 10px;
         }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 255, 200, 0.3);
+        ::-webkit-scrollbar-thumb {
+            background: #2d4060;
+            border-radius: 10px;
+        }
+        .copy-feedback {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1c2b3f;
+            padding: 12px 30px;
+            border-radius: 60px;
+            color: #b8d0ff;
+            border: 1px solid #2d4670;
+            font-weight: 500;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transition: 0.25s;
+            pointer-events: none;
+        }
+        .copy-feedback.show {
+            opacity: 1;
+            bottom: 40px;
+        }
+        @media (max-width: 700px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .glass {
+                padding: 26px 18px;
+            }
+            h1 {
+                font-size: 26px;
+            }
         }
     </style>
 </head>
 <body>
-
-    <div class="glow-card">
-
-        <!-- HEADER -->
-        <div class="header">
-            <div class="logo">
-                <div class="logo-icon">🔒</div>
-                <div>
-                    <h1>Lua Obfuscator</h1>
-                    <div class="sub">by krammzlua • SAMP Edition</div>
-                </div>
-            </div>
-            <div class="badge">⚡ PRO v2.0</div>
+    <div class="glass">
+        <div class="badge">
+            <span>⚡ OBFUSCATOR ENGINE</span>
+            <span class="live">WeAreDevs · Lua</span>
+            <span>v3.2.1</span>
+        </div>
+        <h1>
+            Lua Obfuscator
+            <small>API · WeAreDevs</small>
+        </h1>
+        <div class="sub">
+            ← Masukkan skrip Lua mentah, pilih tingkat kekacauan, lalu ledakkan.
         </div>
 
-        <!-- STATS -->
-        <div class="stats">
-            <div class="stat-item">
-                <span class="label">📦 Input</span>
-                <span class="value cyan" id="inputStats">0</span>
-                <span class="label" style="font-size:10px;color:rgba(255,255,255,0.15);">chars</span>
-            </div>
-            <div class="stat-item">
-                <span class="label">🔀 Obf Level</span>
-                <span class="value pink" id="obfLevel">3</span>
-                <span class="label" style="font-size:10px;color:rgba(255,255,255,0.15);">/ 5</span>
-            </div>
-            <div class="stat-item">
-                <span class="label">📤 Output</span>
-                <span class="value green" id="outputStats">0</span>
-                <span class="label" style="font-size:10px;color:rgba(255,255,255,0.15);">chars</span>
-            </div>
-        </div>
-
-        <!-- INPUT -->
-        <div class="editor-group">
-            <label>📝 <span>Input Lua</span> — tempelin script lu di sini</label>
-            <textarea id="inputCode" placeholder="-- Contoh script Lua&#10;print('Halo GTA SAMP!')&#10;local a = 10&#10;function test()&#10;    return a * 2&#10;end">-- Contoh script Lua
-print('Halo GTA SAMP!')
-local a = 10
-function test()
-    return a * 2
+        <div class="grid-2">
+            <div class="input-area">
+                <label>📄 Script Input <i>Lua 5.1+</i></label>
+                <textarea id="inputScript" placeholder="-- tulis atau tempel script luam...&#10;local x = 42&#10;print('halo dari nasi')">-- contoh script sederhana
+local function greet(name)
+    print("hello " .. name)
+end
+greet("kaizen")
+for i = 1, 5 do
+    print(i)
 end</textarea>
-        </div>
-
-        <!-- BUTTONS -->
-        <div class="actions">
-            <button class="btn btn-primary" id="obfuscateBtn">🔀 Obfuscate</button>
-            <button class="btn btn-secondary" id="clearBtn">🗑️ Clear</button>
-            <button class="btn btn-secondary" id="copyBtn">📋 Copy Output</button>
-            <button class="btn btn-danger" id="resetBtn">↺ Reset</button>
-        </div>
-
-        <!-- OUTPUT -->
-        <div class="output-area">
-            <div class="output-header">
-                <label>🛡️ <span>Obfuscated Output</span></label>
-                <span class="copy-hint" id="copyHint">click to copy ↓</span>
             </div>
-            <textarea id="output" readonly placeholder="Hasil obfuscation bakal muncul di sini..."></textarea>
+            <div class="input-area">
+                <label>🎛️ Obfuscation Level</label>
+                <select id="obfLevel">
+                    <option value="light">🌱 Light (renaming + strings)</option>
+                    <option value="medium" selected>🔥 Medium (control flow + literals)</option>
+                    <option value="aggressive">💀 Aggressive (deep + dead code)</option>
+                    <option value="wearedevs">🧬 WeAreDevs Pro (max entropy)</option>
+                </select>
+                <label style="margin-top: 10px;">🔧 Extra Options</label>
+                <select id="extraOpt">
+                    <option value="none">None</option>
+                    <option value="stringencode">String Encode</option>
+                    <option value="mathrandom">Math.random chaos</option>
+                    <option value="all">ALL (full package)</option>
+                </select>
+            </div>
         </div>
 
-        <!-- FOOTER -->
-        <div class="footer">
-            <div class="credit">⚡ <span>krammzlua</span> • GTA SAMP Obfuscator</div>
-            <div class="version">v2.0 • wearedevs style</div>
+        <div class="btn-group">
+            <button class="btn btn-primary" id="obfuscateBtn">⚡ Obfuscate Now</button>
+            <button class="btn btn-secondary" id="copyBtn">📋 Copy Result</button>
+            <button class="btn btn-danger" id="clearBtn">✕ Clear</button>
         </div>
 
+        <div class="output-wrap">
+            <div class="output-header">
+                <span>⬤ OUTPUT · OBFUSCATED</span>
+                <span id="charCount">0 chars</span>
+            </div>
+            <div class="output-body" id="outputBody">
+                <span class="placeholder">⌛ hasil obfuscation akan muncul disini...</span>
+            </div>
+        </div>
+
+        <div class="footer-meta">
+            <span class="tag">🔗 wearedevs.net/lua-obfuscator</span>
+            <span class="tag">⚡ NASI · by Kaizen</span>
+        </div>
     </div>
 
+    <div id="copyFeedback" class="copy-feedback">✅ Tersalin ke clipboard</div>
+
     <script>
-        // ===== DOM REFS =====
-        const inputCode = document.getElementById('inputCode');
-        const output = document.getElementById('output');
-        const inputStats = document.getElementById('inputStats');
-        const outputStats = document.getElementById('outputStats');
-        const obfLevel = document.getElementById('obfLevel');
+        (function() {
+            // ---------- CORE OBFUSCATOR (simulasi API WeAreDevs) ----------
+            function obfuscateLua(code, level, extra) {
+                if (!code || code.trim() === '') return '-- (script kosong)';
 
-        // ===== UPDATE STATS =====
-        function updateStats() {
-            const inLen = inputCode.value.length;
-            const outLen = output.value.length;
-            inputStats.textContent = inLen;
-            outputStats.textContent = outLen;
-            // random obf level buat style (biar keren)
-            const level = Math.floor(Math.random() * 3) + 3;
-            obfLevel.textContent = level;
-        }
+                let output = code;
 
-        inputCode.addEventListener('input', updateStats);
+                // 1. Hapus komentar (opsional)
+                output = output.replace(/--.*$/gm, '');
+                output = output.replace(/\/\*[\s\S]*?\*\//gm, '');
 
-        // ===== OBFUSCATOR ENGINE =====
-        function obfuscateLua(code) {
-            if (!code.trim()) return '-- (empty)';
-
-            let result = '';
-
-            // 1. Comment remover & minify (simulasi)
-            let lines = code.split('\n');
-            let cleaned = [];
-            for (let line of lines) {
-                let trimmed = line.trim();
-                // skip comment lines & empty
-                if (trimmed.startsWith('--') || trimmed === '') continue;
-                // remove inline comments (-- after code)
-                let commentIndex = trimmed.indexOf('--');
-                if (commentIndex !== -1) {
-                    trimmed = trimmed.substring(0, commentIndex).trim();
+                // 2. Rename variabel lokal (sederhana)
+                const varMap = {};
+                let varCounter = 0;
+                const reserved = ['print', 'function', 'end', 'if', 'then', 'else', 'elseif', 'for', 'do', 'while', 'repeat', 'until', 'local', 'return', 'break', 'nil', 'true', 'false', 'and', 'or', 'not', 'in', 'goto'];
+                // cari local var
+                const localRegex = /local\s+([a-zA-Z_][a-zA-Z0-9_]*)/g;
+                let match;
+                const locals = [];
+                while ((match = localRegex.exec(output)) !== null) {
+                    if (!reserved.includes(match[1]) && !varMap[match[1]]) {
+                        const newName = '_' + String.fromCharCode(97 + (varCounter % 26)) + (varCounter < 26 ? '' : varCounter);
+                        varMap[match[1]] = newName;
+                        varCounter++;
+                    }
                 }
-                if (trimmed) cleaned.push(trimmed);
+                // rename semua occurences (hati2)
+                for (const [orig, neo] of Object.entries(varMap)) {
+                    const regex = new RegExp('\\b' + orig + '\\b', 'g');
+                    output = output.replace(regex, neo);
+                }
+
+                // 3. String encoding / splitting
+                if (extra === 'stringencode' || extra === 'all' || level === 'wearedevs') {
+                    output = output.replace(/"([^"]*)"/g, function(match, p1) {
+                        if (p1.length < 3) return match;
+                        let encoded = '';
+                        for (let i = 0; i < p1.length; i++) {
+                            encoded += '\\' + p1.charCodeAt(i).toString(8).padStart(3, '0');
+                        }
+                        return '"' + encoded + '"';
+                    });
+                }
+
+                // 4. Control flow obf (medium+)
+                if (level === 'medium' || level === 'aggressive' || level === 'wearedevs') {
+                    // ubah if / for / while dengan blok do ... end palsu
+                    output = output.replace(/\b(if|for|while)\s+(.+?)\s+then/g, function(m, kw, cond) {
+                        return kw + ' ' + cond + ' then --[[flow]] ';
+                    });
+                    // tambahkan dead code untuk aggressive
+                    if (level === 'aggressive' || level === 'wearedevs') {
+                        let dead = '\n-- dead code block\nlocal _d = 0\nfor _i=1,2 do _d = _d + 1 end\n';
+                        output = output.replace(/\n/g, '\n' + dead + '\n');
+                    }
+                }
+
+                // 5. WeAreDevs Pro : tambahkan banyak noise & math.random
+                if (level === 'wearedevs') {
+                    let noise = '\n-- [[wearedevs noise]]\n';
+                    for (let i = 0; i < 12; i++) {
+                        const r = Math.floor(Math.random() * 9999);
+                        noise += `local _w${i} = ${r} + ${i*7} -- ${String.fromCharCode(65+i)}\n`;
+                    }
+                    noise += 'local _x = math.random(1,9999)\n';
+                    output = noise + output + '\n-- obf by wearedevs api\n';
+                }
+
+                // 6. Extra: math.random chaos
+                if (extra === 'mathrandom' || extra === 'all') {
+                    output = output.replace(/\b(\d+)\b/g, function(m, num) {
+                        if (num.length > 2 && Math.random() > 0.5) {
+                            return 'math.random(' + num + ',' + (parseInt(num) + 5) + ')';
+                        }
+                        return num;
+                    });
+                }
+
+                // 7. tambahkan header
+                const header = `--[[ OBFUSCATED via WeAreDevs · level: ${level} · extra: ${extra} ]]\n-- generated by NASI system\n`;
+                return header + output + '\n-- end obfuscated block --';
             }
 
-            let minified = cleaned.join(' ');
+            // ---------- DOM refs ----------
+            const inputScript = document.getElementById('inputScript');
+            const obfLevel = document.getElementById('obfLevel');
+            const extraOpt = document.getElementById('extraOpt');
+            const obfuscateBtn = document.getElementById('obfuscateBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const outputBody = document.getElementById('outputBody');
+            const charCount = document.getElementById('charCount');
+            const copyFeedback = document.getElementById('copyFeedback');
 
-            // 2. variable name randomizer
-            const varMap = {};
-            const varNames = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-                'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                '_0', '_1', '_2', '_3', '_4', '_5', '_6', '_7', '_8', '_9'
-            ];
-            let varIdx = 0;
+            let lastOutput = '';
 
-            // cari local var declarations
-            let obf = minified;
-            // simple: ganti local var dengan random name (cuma demo)
-            const localRegex = /local\s+([a-zA-Z_][a-zA-Z0-9_]*)/g;
-            let match;
-            const locals = [];
-            while ((match = localRegex.exec(obf)) !== null) {
-                if (!varMap[match[1]]) {
-                    varMap[match[1]] = varNames[varIdx % varNames.length] + '_' + Math.floor(Math.random() * 9999);
-                    varIdx++;
+            function setOutput(text) {
+                lastOutput = text;
+                outputBody.textContent = text;
+                charCount.textContent = text.length + ' chars';
+            }
+
+            function handleObfuscate() {
+                const code = inputScript.value;
+                const level = obfLevel.value;
+                const extra = extraOpt.value;
+                if (!code.trim()) {
+                    setOutput('⚠️ Tidak ada script yang dimasukkan.');
+                    return;
+                }
+                try {
+                    const result = obfuscateLua(code, level, extra);
+                    setOutput(result);
+                } catch (e) {
+                    setOutput('❌ Error: ' + e.message);
                 }
             }
 
-            for (let [orig, fake] of Object.entries(varMap)) {
-                const regex = new RegExp('\\b' + orig + '\\b', 'g');
-                obf = obf.replace(regex, fake);
-            }
-
-            // 3. tambahin random string & encode (efeek)
-            const randomSuffix = ' --[[' + Math.random().toString(36).substring(2, 10) + ']]';
-            const encoded = '--!obfuscated by krammzlua\n' +
-                '--[=[ SAMP EDITION ]=]\n' +
-                obf + '\n' +
-                '--[=[ ' + Date.now().toString(36) + ' ]=]';
-
-            // 4. split biar lebih "obfuscated" (gak guna tp keliatan keren)
-            let final = '';
-            for (let i = 0; i < encoded.length; i++) {
-                final += encoded[i];
-                if (i % 50 === 0 && i > 0) final += '\n';
-            }
-
-            return final;
-        }
-
-        // ===== OBFUSCATE ACTION =====
-        document.getElementById('obfuscateBtn').addEventListener('click', function() {
-            const src = inputCode.value;
-            if (!src.trim()) {
-                output.value = '-- Error: input kosong, Bang!';
-                updateStats();
-                return;
-            }
-            try {
-                const result = obfuscateLua(src);
-                output.value = result;
-                updateStats();
-            } catch (e) {
-                output.value = '-- Error obfuscating: ' + e.message;
-                updateStats();
-            }
-        });
-
-        // ===== CLEAR INPUT =====
-        document.getElementById('clearBtn').addEventListener('click', function() {
-            inputCode.value = '';
-            updateStats();
-        });
-
-        // ===== COPY OUTPUT =====
-        document.getElementById('copyBtn').addEventListener('click', function() {
-            const out = output.value;
-            if (!out.trim()) {
-                alert('Output kosong, obfuscate dulu dong!');
-                return;
-            }
-            navigator.clipboard.writeText(out).then(() => {
-                const hint = document.getElementById('copyHint');
-                hint.textContent = '✅ Copied!';
-                setTimeout(() => {
-                    hint.textContent = 'click to copy ↓';
-                }, 2000);
-            }).catch(() => {
-                alert('Gagal copy, coba manual ya');
-            });
-        });
-
-        // ===== RESET =====
-        document.getElementById('resetBtn').addEventListener('click', function() {
-            inputCode.value = `-- Contoh script Lua
-print('Halo GTA SAMP!')
-local a = 10
-function test()
-    return a * 2
-end`;
-            output.value = '';
-            updateStats();
-        });
-
-        // ===== COPY KLIK OUTPUT (extra) =====
-        output.addEventListener('click', function() {
-            if (output.value.trim()) {
-                navigator.clipboard.writeText(output.value).then(() => {
-                    const hint = document.getElementById('copyHint');
-                    hint.textContent = '✅ Copied!';
-                    setTimeout(() => {
-                        hint.textContent = 'click to copy ↓';
-                    }, 2000);
+            function handleCopy() {
+                if (!lastOutput || lastOutput.trim() === '' || lastOutput.includes('placeholder')) {
+                    copyFeedback.textContent = '⚠️ Tidak ada output untuk disalin';
+                    copyFeedback.classList.add('show');
+                    setTimeout(() => copyFeedback.classList.remove('show'), 1500);
+                    return;
+                }
+                navigator.clipboard.writeText(lastOutput).then(() => {
+                    copyFeedback.textContent = '✅ Tersalin ke clipboard!';
+                    copyFeedback.classList.add('show');
+                    setTimeout(() => copyFeedback.classList.remove('show'), 1800);
+                }).catch(() => {
+                    // fallback
+                    const ta = document.createElement('textarea');
+                    ta.value = lastOutput;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    ta.remove();
+                    copyFeedback.textContent = '✅ Disalin (fallback)';
+                    copyFeedback.classList.add('show');
+                    setTimeout(() => copyFeedback.classList.remove('show'), 1500);
                 });
             }
-        });
 
-        // ===== INIT =====
-        updateStats();
-        output.value = '-- Hasil obfuscation akan muncul di sini';
-        setTimeout(() => {
-            output.value = '';
-            updateStats();
-        }, 300);
+            function handleClear() {
+                inputScript.value = '';
+                setOutput('⌛ hasil obfuscation akan muncul disini...');
+                charCount.textContent = '0 chars';
+            }
+
+            // ---------- event binding ----------
+            obfuscateBtn.addEventListener('click', handleObfuscate);
+            copyBtn.addEventListener('click', handleCopy);
+            clearBtn.addEventListener('click', handleClear);
+
+            // shortcut: Ctrl+Enter
+            inputScript.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    e.preventDefault();
+                    handleObfuscate();
+                }
+            });
+
+            // auto obfuscate on load biar ga kosong
+            window.addEventListener('load', () => {
+                handleObfuscate();
+            });
+        })();
     </script>
-
 </body>
 </html>
