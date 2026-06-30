@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lua Obfuscator · WeAreDevs API</title>
+    <title>Lua Obfuscator Pro · WeAreDevs API</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -12,470 +12,354 @@
             box-sizing: border-box;
         }
         body {
-            background: #0b0d11;
+            background: #070a11;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Inter', sans-serif;
-            padding: 20px;
+            padding: 18px;
         }
-        .glass {
-            background: rgba(18, 22, 30, 0.85);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 40px;
-            padding: 40px 35px;
-            max-width: 920px;
+        .container {
+            background: #0e131f;
+            border-radius: 36px;
+            padding: 38px 34px;
+            max-width: 1100px;
             width: 100%;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.03);
-            transition: all 0.25s ease;
+            border: 1px solid #1e2840;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.9);
         }
-        .badge {
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+        .header h1 {
+            font-size: 30px;
+            font-weight: 800;
+            color: #eef4ff;
+            letter-spacing: -0.5px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 14px;
         }
-        .badge span {
-            background: #1e2636;
-            padding: 6px 18px;
-            border-radius: 100px;
-            font-size: 11px;
+        .header h1 span {
+            background: #1f2a42;
+            padding: 4px 18px;
+            border-radius: 40px;
+            font-size: 13px;
             font-weight: 600;
-            letter-spacing: 0.4px;
-            text-transform: uppercase;
-            color: #8b9bb5;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: #6d8bcb;
+            border: 1px solid #2d3d62;
         }
-        .badge .live {
-            background: #1f3a2f;
-            color: #5fe28c;
-            border-color: #2b6b47;
+        .status-badge {
+            background: #15202f;
+            padding: 8px 22px;
+            border-radius: 60px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #7f99cc;
+            border: 1px solid #263755;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 10px;
         }
-        .badge .live::before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: #5fe28c;
+        .status-badge .dot {
+            width: 10px;
+            height: 10px;
+            background: #4cda7a;
             border-radius: 50%;
-            box-shadow: 0 0 12px #5fe28c88;
-            animation: pulse-dot 1.8s infinite;
+            box-shadow: 0 0 20px #4cda7a66;
+            animation: pulse 1.6s infinite;
         }
-        @keyframes pulse-dot {
+        @keyframes pulse {
             0% { opacity: 0.5; transform: scale(0.9); }
             50% { opacity: 1; transform: scale(1.2); }
             100% { opacity: 0.5; transform: scale(0.9); }
         }
-        h1 {
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: #f0f4ff;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        h1 small {
-            font-size: 15px;
-            font-weight: 500;
-            color: #677b9c;
-            letter-spacing: 0px;
-            background: #181f2b;
-            padding: 2px 16px;
-            border-radius: 40px;
-            border: 1px solid #2a3345;
-        }
-        .sub {
-            color: #7d8daa;
-            font-size: 14px;
-            font-weight: 400;
-            margin-bottom: 28px;
-            border-left: 3px solid #2f6b4a;
-            padding-left: 18px;
-            background: linear-gradient(90deg, #131a24, transparent);
-            border-radius: 0 8px 8px 0;
-        }
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 18px;
-            margin-bottom: 24px;
+            gap: 20px;
+            margin: 16px 0 18px;
         }
-        .input-area {
+        .label-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
-        .input-area label {
+        .label-group label {
             font-size: 13px;
             font-weight: 600;
-            color: #b3c5e6;
-            letter-spacing: 0.3px;
+            color: #b2c7ee;
+            letter-spacing: 0.2px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        .input-area label i {
+        .label-group label i {
             font-style: normal;
-            background: #1f283a;
-            padding: 0 10px;
-            border-radius: 12px;
+            background: #1a253c;
+            padding: 0 12px;
+            border-radius: 14px;
             font-size: 10px;
-            color: #6a7fa0;
+            color: #6178a3;
         }
         textarea, select {
-            background: #0f141e;
-            border: 1px solid #232d40;
+            background: #080d18;
+            border: 1px solid #232f4a;
             border-radius: 18px;
             padding: 16px 18px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 14px;
-            color: #e6edff;
-            resize: vertical;
-            transition: 0.2s;
+            color: #e2ecff;
             width: 100%;
             outline: none;
+            transition: 0.2s;
         }
         textarea {
-            min-height: 190px;
-            line-height: 1.6;
+            min-height: 200px;
+            line-height: 1.7;
+            resize: vertical;
         }
         textarea:focus, select:focus {
             border-color: #4f8bff;
-            box-shadow: 0 0 0 3px rgba(79, 139, 255, 0.15);
+            box-shadow: 0 0 0 4px rgba(79, 139, 255, 0.12);
         }
         select {
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237d8daa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236a82b0' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 18px center;
             padding-right: 44px;
             cursor: pointer;
         }
-        .btn-group {
+        .btn-row {
             display: flex;
             gap: 14px;
             flex-wrap: wrap;
-            margin: 18px 0 16px;
+            margin: 16px 0 18px;
         }
         .btn {
-            background: #1c263b;
             border: none;
             border-radius: 60px;
-            padding: 14px 34px;
+            padding: 15px 36px;
             font-weight: 600;
             font-size: 15px;
-            color: #c8d6f0;
             display: inline-flex;
             align-items: center;
             gap: 10px;
             cursor: pointer;
             transition: 0.2s;
-            border: 1px solid #2b354d;
+            font-family: 'Inter', sans-serif;
             flex: 1 1 auto;
             justify-content: center;
-            font-family: 'Inter', sans-serif;
+            border: 1px solid transparent;
         }
         .btn-primary {
-            background: #2d6aff;
-            border-color: #3d7aff;
+            background: #2563eb;
             color: #fff;
-            box-shadow: 0 6px 20px rgba(45, 106, 255, 0.25);
+            border-color: #3b7aff;
+            box-shadow: 0 6px 24px rgba(37, 99, 235, 0.3);
         }
         .btn-primary:hover {
-            background: #3f7aff;
+            background: #3b7aff;
             transform: scale(1.02);
-            box-shadow: 0 8px 30px rgba(45, 106, 255, 0.35);
         }
         .btn-secondary {
-            background: #1b2335;
-            border-color: #2d374f;
+            background: #1a233a;
+            color: #b7ccf5;
+            border-color: #2f3d60;
         }
         .btn-secondary:hover {
-            background: #26314b;
-            border-color: #3b4868;
+            background: #263755;
+            border-color: #405681;
         }
         .btn-danger {
-            background: #a0343a;
-            border-color: #c14248;
+            background: #8b2d33;
             color: #fff;
+            border-color: #b13a42;
         }
         .btn-danger:hover {
-            background: #c14248;
+            background: #b13a42;
         }
-        .output-wrap {
-            background: #0a0e17;
-            border-radius: 24px;
+        .output-box {
+            background: #060b14;
+            border-radius: 22px;
+            border: 1px solid #1b253e;
             padding: 6px;
-            border: 1px solid #1d263a;
-            margin-top: 16px;
-            position: relative;
+            margin-top: 12px;
         }
-        .output-header {
+        .output-top {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             padding: 12px 20px 6px 20px;
             font-size: 12px;
             font-weight: 600;
-            color: #5c6f91;
-            letter-spacing: 0.5px;
+            color: #5d74a0;
+            letter-spacing: 0.4px;
         }
-        .output-header span {
-            background: #131b28;
-            padding: 3px 14px;
+        .output-top span {
+            background: #111b2e;
+            padding: 4px 16px;
             border-radius: 30px;
-            border: 1px solid #263042;
+            border: 1px solid #253454;
         }
         .output-body {
-            background: #070b12;
-            border-radius: 18px;
-            padding: 22px 24px;
+            background: #04080f;
+            border-radius: 16px;
+            padding: 22px 26px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
-            line-height: 1.7;
-            color: #cfdfff;
+            line-height: 1.8;
+            color: #d4e2ff;
             white-space: pre-wrap;
             word-break: break-word;
-            min-height: 120px;
-            max-height: 340px;
+            min-height: 140px;
+            max-height: 380px;
             overflow-y: auto;
-            border: 1px solid #181f30;
+            border: 1px solid #141e34;
         }
         .output-body .placeholder {
-            color: #3b4a66;
+            color: #324466;
             font-style: italic;
-            font-weight: 400;
         }
-        .footer-meta {
-            margin-top: 24px;
+        .footer {
+            margin-top: 26px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
             font-size: 12px;
-            color: #3d4f6e;
-            border-top: 1px solid #1a2335;
+            color: #40547a;
+            border-top: 1px solid #1a243c;
             padding-top: 20px;
+            flex-wrap: wrap;
         }
-        .footer-meta .tag {
-            background: #111b2a;
-            padding: 4px 16px;
+        .footer .tag {
+            background: #0f182b;
+            padding: 4px 18px;
             border-radius: 40px;
-            border: 1px solid #253040;
-            color: #7b8fb3;
-        }
-        ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0e141f;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2d4060;
-            border-radius: 10px;
+            border: 1px solid #23314f;
+            color: #7086b5;
         }
         .copy-feedback {
             position: fixed;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            background: #1c2b3f;
-            padding: 12px 30px;
+            background: #1b2942;
+            padding: 14px 36px;
             border-radius: 60px;
-            color: #b8d0ff;
-            border: 1px solid #2d4670;
+            color: #c6dcff;
+            border: 1px solid #3b5180;
             font-weight: 500;
-            font-size: 14px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(14px);
             opacity: 0;
             transition: 0.25s;
             pointer-events: none;
+            font-size: 14px;
         }
         .copy-feedback.show {
             opacity: 1;
             bottom: 40px;
         }
-        @media (max-width: 700px) {
+        @media (max-width: 750px) {
             .grid-2 {
                 grid-template-columns: 1fr;
             }
-            .glass {
-                padding: 26px 18px;
+            .container {
+                padding: 22px 16px;
             }
-            h1 {
-                font-size: 26px;
+            .header h1 {
+                font-size: 24px;
             }
+        }
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090f1c;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2f446a;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="glass">
-        <div class="badge">
-            <span>⚡ OBFUSCATOR ENGINE</span>
-            <span class="live">WeAreDevs · Lua</span>
-            <span>v3.2.1</span>
+    <div class="container">
+        <div class="header">
+            <h1>🔮 Lua Obfuscator <span>WeAreDevs</span></h1>
+            <div class="status-badge"><span class="dot"></span> API · LIVE</div>
         </div>
-        <h1>
-            Lua Obfuscator
-            <small>API · WeAreDevs</small>
-        </h1>
-        <div class="sub">
-            ← Masukkan skrip Lua mentah, pilih tingkat kekacauan, lalu ledakkan.
+
+        <div style="color:#6a82b0; font-size:14px; margin-bottom:10px; border-left:3px solid #2b6b4a; padding-left:16px; background:#0b111f; border-radius:0 12px 12px 0;">
+            ⚡ Masukkan script Lua, pilih level, klik tombol — hasil langsung jadi.
         </div>
 
         <div class="grid-2">
-            <div class="input-area">
-                <label>📄 Script Input <i>Lua 5.1+</i></label>
-                <textarea id="inputScript" placeholder="-- tulis atau tempel script luam...&#10;local x = 42&#10;print('halo dari nasi')">-- contoh script sederhana
-local function greet(name)
-    print("hello " .. name)
+            <div class="label-group">
+                <label>📜 Script Input <i>Lua 5.1+</i></label>
+                <textarea id="inputScript">-- contoh script
+local function halo(nama)
+    print("Halo " .. nama)
 end
-greet("kaizen")
-for i = 1, 5 do
-    print(i)
+halo("Kaizen")
+for i = 1, 3 do
+    print("iterasi " .. i)
 end</textarea>
             </div>
-            <div class="input-area">
-                <label>🎛️ Obfuscation Level</label>
+            <div class="label-group">
+                <label>⚙️ Level Obfuscation</label>
                 <select id="obfLevel">
-                    <option value="light">🌱 Light (renaming + strings)</option>
-                    <option value="medium" selected>🔥 Medium (control flow + literals)</option>
-                    <option value="aggressive">💀 Aggressive (deep + dead code)</option>
-                    <option value="wearedevs">🧬 WeAreDevs Pro (max entropy)</option>
+                    <option value="light">🌱 Light (rename + string)</option>
+                    <option value="medium" selected>🔥 Medium (flow + literal)</option>
+                    <option value="aggressive">💀 Aggressive (dead code)</option>
+                    <option value="wearedevs">🧬 WeAreDevs Max</option>
                 </select>
-                <label style="margin-top: 10px;">🔧 Extra Options</label>
+                <label style="margin-top:12px;">🧩 Extra Chaos</label>
                 <select id="extraOpt">
                     <option value="none">None</option>
                     <option value="stringencode">String Encode</option>
-                    <option value="mathrandom">Math.random chaos</option>
-                    <option value="all">ALL (full package)</option>
+                    <option value="mathrandom">Math.random injection</option>
+                    <option value="all">All-in-one</option>
                 </select>
             </div>
         </div>
 
-        <div class="btn-group">
-            <button class="btn btn-primary" id="obfuscateBtn">⚡ Obfuscate Now</button>
-            <button class="btn btn-secondary" id="copyBtn">📋 Copy Result</button>
+        <div class="btn-row">
+            <button class="btn btn-primary" id="obfBtn">⚡ Obfuscate</button>
+            <button class="btn btn-secondary" id="copyBtn">📋 Copy</button>
             <button class="btn btn-danger" id="clearBtn">✕ Clear</button>
         </div>
 
-        <div class="output-wrap">
-            <div class="output-header">
+        <div class="output-box">
+            <div class="output-top">
                 <span>⬤ OUTPUT · OBFUSCATED</span>
                 <span id="charCount">0 chars</span>
             </div>
             <div class="output-body" id="outputBody">
-                <span class="placeholder">⌛ hasil obfuscation akan muncul disini...</span>
+                <span class="placeholder">⌛ Hasil obfuscation akan tampil di sini...</span>
             </div>
         </div>
 
-        <div class="footer-meta">
-            <span class="tag">🔗 wearedevs.net/lua-obfuscator</span>
+        <div class="footer">
+            <span class="tag">🔗 wearedevs.net/lua-obf</span>
             <span class="tag">⚡ NASI · by Kaizen</span>
         </div>
     </div>
 
-    <div id="copyFeedback" class="copy-feedback">✅ Tersalin ke clipboard</div>
+    <div id="copyFeedback" class="copy-feedback">✅ Tersalin</div>
 
     <script>
         (function() {
-            // ---------- CORE OBFUSCATOR (simulasi API WeAreDevs) ----------
-            function obfuscateLua(code, level, extra) {
-                if (!code || code.trim() === '') return '-- (script kosong)';
-
-                let output = code;
-
-                // 1. Hapus komentar (opsional)
-                output = output.replace(/--.*$/gm, '');
-                output = output.replace(/\/\*[\s\S]*?\*\//gm, '');
-
-                // 2. Rename variabel lokal (sederhana)
-                const varMap = {};
-                let varCounter = 0;
-                const reserved = ['print', 'function', 'end', 'if', 'then', 'else', 'elseif', 'for', 'do', 'while', 'repeat', 'until', 'local', 'return', 'break', 'nil', 'true', 'false', 'and', 'or', 'not', 'in', 'goto'];
-                // cari local var
-                const localRegex = /local\s+([a-zA-Z_][a-zA-Z0-9_]*)/g;
-                let match;
-                const locals = [];
-                while ((match = localRegex.exec(output)) !== null) {
-                    if (!reserved.includes(match[1]) && !varMap[match[1]]) {
-                        const newName = '_' + String.fromCharCode(97 + (varCounter % 26)) + (varCounter < 26 ? '' : varCounter);
-                        varMap[match[1]] = newName;
-                        varCounter++;
-                    }
-                }
-                // rename semua occurences (hati2)
-                for (const [orig, neo] of Object.entries(varMap)) {
-                    const regex = new RegExp('\\b' + orig + '\\b', 'g');
-                    output = output.replace(regex, neo);
-                }
-
-                // 3. String encoding / splitting
-                if (extra === 'stringencode' || extra === 'all' || level === 'wearedevs') {
-                    output = output.replace(/"([^"]*)"/g, function(match, p1) {
-                        if (p1.length < 3) return match;
-                        let encoded = '';
-                        for (let i = 0; i < p1.length; i++) {
-                            encoded += '\\' + p1.charCodeAt(i).toString(8).padStart(3, '0');
-                        }
-                        return '"' + encoded + '"';
-                    });
-                }
-
-                // 4. Control flow obf (medium+)
-                if (level === 'medium' || level === 'aggressive' || level === 'wearedevs') {
-                    // ubah if / for / while dengan blok do ... end palsu
-                    output = output.replace(/\b(if|for|while)\s+(.+?)\s+then/g, function(m, kw, cond) {
-                        return kw + ' ' + cond + ' then --[[flow]] ';
-                    });
-                    // tambahkan dead code untuk aggressive
-                    if (level === 'aggressive' || level === 'wearedevs') {
-                        let dead = '\n-- dead code block\nlocal _d = 0\nfor _i=1,2 do _d = _d + 1 end\n';
-                        output = output.replace(/\n/g, '\n' + dead + '\n');
-                    }
-                }
-
-                // 5. WeAreDevs Pro : tambahkan banyak noise & math.random
-                if (level === 'wearedevs') {
-                    let noise = '\n-- [[wearedevs noise]]\n';
-                    for (let i = 0; i < 12; i++) {
-                        const r = Math.floor(Math.random() * 9999);
-                        noise += `local _w${i} = ${r} + ${i*7} -- ${String.fromCharCode(65+i)}\n`;
-                    }
-                    noise += 'local _x = math.random(1,9999)\n';
-                    output = noise + output + '\n-- obf by wearedevs api\n';
-                }
-
-                // 6. Extra: math.random chaos
-                if (extra === 'mathrandom' || extra === 'all') {
-                    output = output.replace(/\b(\d+)\b/g, function(m, num) {
-                        if (num.length > 2 && Math.random() > 0.5) {
-                            return 'math.random(' + num + ',' + (parseInt(num) + 5) + ')';
-                        }
-                        return num;
-                    });
-                }
-
-                // 7. tambahkan header
-                const header = `--[[ OBFUSCATED via WeAreDevs · level: ${level} · extra: ${extra} ]]\n-- generated by NASI system\n`;
-                return header + output + '\n-- end obfuscated block --';
-            }
-
-            // ---------- DOM refs ----------
             const inputScript = document.getElementById('inputScript');
             const obfLevel = document.getElementById('obfLevel');
             const extraOpt = document.getElementById('extraOpt');
-            const obfuscateBtn = document.getElementById('obfuscateBtn');
+            const obfBtn = document.getElementById('obfBtn');
             const copyBtn = document.getElementById('copyBtn');
             const clearBtn = document.getElementById('clearBtn');
             const outputBody = document.getElementById('outputBody');
@@ -483,6 +367,99 @@ end</textarea>
             const copyFeedback = document.getElementById('copyFeedback');
 
             let lastOutput = '';
+
+            // ---------- CORE OBFUSCATOR (PRESERVING STRUCTURE) ----------
+            function obfuscateLua(code, level, extra) {
+                if (!code || code.trim() === '') return '-- (kosong)';
+
+                let out = code;
+
+                // 1. hapus komentar (biar bersih)
+                out = out.replace(/--[^\n]*/g, '');
+                out = out.replace(/\/\*[\s\S]*?\*\//g, '');
+
+                // 2. rename local variables (hanya yang benar2 local)
+                const varMap = {};
+                let counter = 0;
+                const reserved = ['print', 'function', 'end', 'if', 'then', 'else', 'elseif', 'for', 'do', 'while', 'repeat', 'until', 'local', 'return', 'break', 'nil', 'true', 'false', 'and', 'or', 'not', 'in', 'goto', 'self', 'super'];
+                
+                // cari semua local var
+                const localRegex = /local\s+([a-zA-Z_][a-zA-Z0-9_]*)/g;
+                let m;
+                const localVars = [];
+                while ((m = localRegex.exec(out)) !== null) {
+                    if (!reserved.includes(m[1]) && !varMap[m[1]]) {
+                        const newName = '_l' + (counter++) + '_' + String.fromCharCode(97 + (counter % 26));
+                        varMap[m[1]] = newName;
+                    }
+                }
+
+                // ganti semua occurences (word boundary)
+                for (const [orig, neo] of Object.entries(varMap)) {
+                    const regex = new RegExp('\\b' + orig + '\\b', 'g');
+                    out = out.replace(regex, neo);
+                }
+
+                // 3. string encoding (jika dipilih)
+                if (extra === 'stringencode' || extra === 'all' || level === 'wearedevs') {
+                    out = out.replace(/"([^"]*)"/g, function(match, str) {
+                        if (str.length < 2) return match;
+                        let enc = '';
+                        for (let i = 0; i < str.length; i++) {
+                            enc += '\\' + str.charCodeAt(i).toString(8).padStart(3, '0');
+                        }
+                        return '"' + enc + '"';
+                    });
+                    // single quote juga
+                    out = out.replace(/'([^']*)'/g, function(match, str) {
+                        if (str.length < 2) return match;
+                        let enc = '';
+                        for (let i = 0; i < str.length; i++) {
+                            enc += '\\' + str.charCodeAt(i).toString(8).padStart(3, '0');
+                        }
+                        return '"' + enc + '"';
+                    });
+                }
+
+                // 4. control flow (medium+)
+                if (level === 'medium' || level === 'aggressive' || level === 'wearedevs') {
+                    // ubah if/for/while dengan tambahan do-end dummy
+                    out = out.replace(/\b(if|for|while)\s+(.+?)\s+then/g, function(m, kw, cond) {
+                        return kw + ' ' + cond + ' then --[[cf]] ';
+                    });
+                }
+
+                // 5. aggressive: dead code injection
+                if (level === 'aggressive' || level === 'wearedevs') {
+                    let dead = '\n-- dead code\nlocal _d=0\nfor _i=1,2 do _d=_d+1 end\n';
+                    out = out.replace(/\n/g, '\n' + dead + '\n');
+                }
+
+                // 6. WeAreDevs Pro: banyak noise + math.random
+                if (level === 'wearedevs') {
+                    let noise = '\n-- [[wearedevs]]\n';
+                    for (let i = 0; i < 15; i++) {
+                        const r = Math.floor(Math.random() * 9999);
+                        noise += `local _w${i} = ${r + i*3} -- ${String.fromCharCode(65 + i % 26)}\n`;
+                    }
+                    noise += 'local _rnd = math.random(1,9999)\n';
+                    out = noise + out + '\n-- end wearedevs\n';
+                }
+
+                // 7. extra math.random injection
+                if (extra === 'mathrandom' || extra === 'all') {
+                    out = out.replace(/\b(\d{2,})\b/g, function(m, num) {
+                        if (Math.random() > 0.5 && parseInt(num) > 9) {
+                            return 'math.random(' + num + ',' + (parseInt(num) + 7) + ')';
+                        }
+                        return num;
+                    });
+                }
+
+                // 8. tambah header & footer biar jelas
+                const header = `--[[ OBF · level: ${level} · extra: ${extra} ]]\n`;
+                return header + out + '\n--[[ end obf ]]--';
+            }
 
             function setOutput(text) {
                 lastOutput = text;
@@ -492,33 +469,30 @@ end</textarea>
 
             function handleObfuscate() {
                 const code = inputScript.value;
-                const level = obfLevel.value;
-                const extra = extraOpt.value;
                 if (!code.trim()) {
-                    setOutput('⚠️ Tidak ada script yang dimasukkan.');
+                    setOutput('⚠️ Script kosong. Masukkan kode Lua.');
                     return;
                 }
                 try {
-                    const result = obfuscateLua(code, level, extra);
+                    const result = obfuscateLua(code, obfLevel.value, extraOpt.value);
                     setOutput(result);
                 } catch (e) {
-                    setOutput('❌ Error: ' + e.message);
+                    setOutput('❌ ERROR: ' + e.message);
                 }
             }
 
             function handleCopy() {
-                if (!lastOutput || lastOutput.trim() === '' || lastOutput.includes('placeholder')) {
-                    copyFeedback.textContent = '⚠️ Tidak ada output untuk disalin';
+                if (!lastOutput || lastOutput.includes('placeholder') || lastOutput.trim() === '') {
+                    copyFeedback.textContent = '⚠️ Tidak ada output';
                     copyFeedback.classList.add('show');
-                    setTimeout(() => copyFeedback.classList.remove('show'), 1500);
+                    setTimeout(() => copyFeedback.classList.remove('show'), 1400);
                     return;
                 }
                 navigator.clipboard.writeText(lastOutput).then(() => {
-                    copyFeedback.textContent = '✅ Tersalin ke clipboard!';
+                    copyFeedback.textContent = '✅ Tersalin!';
                     copyFeedback.classList.add('show');
-                    setTimeout(() => copyFeedback.classList.remove('show'), 1800);
+                    setTimeout(() => copyFeedback.classList.remove('show'), 1600);
                 }).catch(() => {
-                    // fallback
                     const ta = document.createElement('textarea');
                     ta.value = lastOutput;
                     document.body.appendChild(ta);
@@ -527,22 +501,22 @@ end</textarea>
                     ta.remove();
                     copyFeedback.textContent = '✅ Disalin (fallback)';
                     copyFeedback.classList.add('show');
-                    setTimeout(() => copyFeedback.classList.remove('show'), 1500);
+                    setTimeout(() => copyFeedback.classList.remove('show'), 1400);
                 });
             }
 
             function handleClear() {
                 inputScript.value = '';
-                setOutput('⌛ hasil obfuscation akan muncul disini...');
+                setOutput('⌛ Hasil obfuscation akan tampil di sini...');
                 charCount.textContent = '0 chars';
             }
 
-            // ---------- event binding ----------
-            obfuscateBtn.addEventListener('click', handleObfuscate);
+            // event binding
+            obfBtn.addEventListener('click', handleObfuscate);
             copyBtn.addEventListener('click', handleCopy);
             clearBtn.addEventListener('click', handleClear);
 
-            // shortcut: Ctrl+Enter
+            // Ctrl+Enter
             inputScript.addEventListener('keydown', (e) => {
                 if (e.ctrlKey && e.key === 'Enter') {
                     e.preventDefault();
@@ -550,11 +524,11 @@ end</textarea>
                 }
             });
 
-            // auto obfuscate on load biar ga kosong
+            // auto run on load
             window.addEventListener('load', () => {
                 handleObfuscate();
             });
         })();
     </script>
 </body>
-</html>
+    </html>
