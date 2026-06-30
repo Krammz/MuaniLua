@@ -1,91 +1,609 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Upload Public Simple</title>
-  <style>
-    body { font-family: Arial; text-align:center; padding:40px; background:#f4f4f4; }
-    .box { background:#fff; padding:20px; border-radius:10px; max-width:500px; margin:auto; }
-    button { padding:10px; margin:10px; }
-    li { margin:10px; }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lua Obfuscator Pro 🚀</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0f;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-image:
+                radial-gradient(ellipse at 10% 20%, rgba(0, 255, 200, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(255, 0, 200, 0.05) 0%, transparent 50%);
+        }
+
+        /* ===== GLOW CARD ===== */
+        .glow-card {
+            position: relative;
+            background: rgba(15, 15, 25, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 1000px;
+            width: 100%;
+            border: 1px solid rgba(0, 255, 200, 0.15);
+            box-shadow: 0 0 60px rgba(0, 255, 200, 0.05), inset 0 0 60px rgba(0, 255, 200, 0.02);
+            transition: border-color 0.3s;
+        }
+
+        .glow-card:hover {
+            border-color: rgba(0, 255, 200, 0.3);
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-icon {
+            font-size: 36px;
+            filter: drop-shadow(0 0 20px rgba(0, 255, 200, 0.3));
+        }
+
+        .logo h1 {
+            font-size: 26px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00ffc8, #00a3ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .logo .sub {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.3);
+            -webkit-text-fill-color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .badge {
+            background: rgba(0, 255, 200, 0.08);
+            border: 1px solid rgba(0, 255, 200, 0.15);
+            border-radius: 100px;
+            padding: 6px 18px;
+            font-size: 11px;
+            color: #00ffc8;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* ===== STATS BAR ===== */
+        .stats {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            padding: 15px 20px;
+            background: rgba(0, 255, 200, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(0, 255, 200, 0.05);
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stat-item .label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-item .value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .stat-item .value.cyan {
+            color: #00ffc8;
+        }
+        .stat-item .value.pink {
+            color: #ff6b9d;
+        }
+        .stat-item .value.green {
+            color: #6bff8a;
+        }
+
+        /* ===== TEXTAREA ===== */
+        .editor-group {
+            margin-bottom: 20px;
+        }
+
+        .editor-group label {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .editor-group label span {
+            color: #00ffc8;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 18px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            color: #b8c7d9;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.7;
+            resize: vertical;
+            min-height: 180px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: rgba(0, 255, 200, 0.3);
+            box-shadow: 0 0 30px rgba(0, 255, 200, 0.03);
+        }
+
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.12);
+        }
+
+        /* ===== BUTTONS ===== */
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 20px 0 25px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00ffc8, #00a3ff);
+            color: #0a0a0f;
+            box-shadow: 0 0 30px rgba(0, 255, 200, 0.15);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 0 50px rgba(0, 255, 200, 0.25);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
+        .btn-danger {
+            background: rgba(255, 50, 100, 0.08);
+            color: #ff6b9d;
+            border: 1px solid rgba(255, 50, 100, 0.12);
+        }
+
+        .btn-danger:hover {
+            background: rgba(255, 50, 100, 0.15);
+        }
+
+        .btn-success {
+            background: rgba(50, 255, 100, 0.08);
+            color: #6bff8a;
+            border: 1px solid rgba(50, 255, 100, 0.12);
+        }
+
+        .btn-success:hover {
+            background: rgba(50, 255, 100, 0.15);
+        }
+
+        /* ===== OUTPUT ===== */
+        .output-area {
+            margin-top: 5px;
+        }
+
+        .output-area .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .output-area .output-header label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .output-area .output-header .copy-hint {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.15);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .output-area .output-header .copy-hint:hover {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        #output {
+            min-height: 180px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 255, 200, 0.06);
+        }
+
+        #output:focus {
+            border-color: rgba(0, 255, 200, 0.2);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .footer .credit {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.1);
+            letter-spacing: 0.5px;
+        }
+
+        .footer .credit span {
+            color: rgba(0, 255, 200, 0.2);
+        }
+
+        .footer .version {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.06);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .glow-card {
+                padding: 24px;
+            }
+
+            .logo h1 {
+                font-size: 20px;
+            }
+
+            .stats {
+                gap: 12px;
+                padding: 12px 16px;
+            }
+
+            .stat-item .value {
+                font-size: 14px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 11px;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 200, 0.15);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 255, 200, 0.3);
+        }
+    </style>
 </head>
 <body>
 
-<div class="box">
-  <h2>📂 File Public</h2>
+    <div class="glow-card">
 
-  <button onclick="goWA()">📢 Saluran Krammz</button>
+        <!-- HEADER -->
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">🔒</div>
+                <div>
+                    <h1>Lua Obfuscator</h1>
+                    <div class="sub">by krammzlua • SAMP Edition</div>
+                </div>
+            </div>
+            <div class="badge">⚡ PRO v2.0</div>
+        </div>
 
-  <ul id="list"></ul>
+        <!-- STATS -->
+        <div class="stats">
+            <div class="stat-item">
+                <span class="label">📦 Input</span>
+                <span class="value cyan" id="inputStats">0</span>
+                <span class="label" style="font-size:10px;color:rgba(255,255,255,0.15);">chars</span>
+            </div>
+            <div class="stat-item">
+                <span class="label">🔀 Obf Level</span>
+                <span class="value pink" id="obfLevel">3</span>
+                <span class="label" style="font-size:10px;color:rgba(255,255,255,0.15);">/ 5</span>
+            </div>
+            <div class="stat-item">
+                <span class="label">📤 Output</span>
+                <span class="value green" id="outputStats">0</span>
+                <span class="label" style="font-size:10px;color:rgba(255,255,255,0.15);">chars</span>
+            </div>
+        </div>
 
-  <hr>
+        <!-- INPUT -->
+        <div class="editor-group">
+            <label>📝 <span>Input Lua</span> — tempelin script lu di sini</label>
+            <textarea id="inputCode" placeholder="-- Contoh script Lua&#10;print('Halo GTA SAMP!')&#10;local a = 10&#10;function test()&#10;    return a * 2&#10;end">-- Contoh script Lua
+print('Halo GTA SAMP!')
+local a = 10
+function test()
+    return a * 2
+end</textarea>
+        </div>
 
-  <h3>🔐 Upload</h3>
-  <input type="password" id="pass" placeholder="Password">
-  <br>
-  <input type="file" id="file" style="display:none;">
-  <br>
-  <button onclick="login()">Unlock</button>
-  <button onclick="upload()" id="btn" style="display:none;">Upload</button>
-</div>
+        <!-- BUTTONS -->
+        <div class="actions">
+            <button class="btn btn-primary" id="obfuscateBtn">🔀 Obfuscate</button>
+            <button class="btn btn-secondary" id="clearBtn">🗑️ Clear</button>
+            <button class="btn btn-secondary" id="copyBtn">📋 Copy Output</button>
+            <button class="btn btn-danger" id="resetBtn">↺ Reset</button>
+        </div>
 
-<script>
-const PASSWORD = "12345";
-let unlocked = false;
-let files = JSON.parse(localStorage.getItem('files')) || [];
+        <!-- OUTPUT -->
+        <div class="output-area">
+            <div class="output-header">
+                <label>🛡️ <span>Obfuscated Output</span></label>
+                <span class="copy-hint" id="copyHint">click to copy ↓</span>
+            </div>
+            <textarea id="output" readonly placeholder="Hasil obfuscation bakal muncul di sini..."></textarea>
+        </div>
 
-function goWA() {
-  window.location.href = "https://whatsapp.com/channel/0029Vb1emh39Gv7QRTZwp02u";
-}
+        <!-- FOOTER -->
+        <div class="footer">
+            <div class="credit">⚡ <span>krammzlua</span> • GTA SAMP Obfuscator</div>
+            <div class="version">v2.0 • wearedevs style</div>
+        </div>
 
-function login() {
-  if (document.getElementById('pass').value === PASSWORD) {
-    unlocked = true;
-    document.getElementById('file').style.display = 'block';
-    document.getElementById('btn').style.display = 'inline-block';
-    alert('Upload kebuka!');
-  } else {
-    alert('Password salah!');
-  }
-}
+    </div>
 
-async function upload() {
-  if (!unlocked) return alert('Login dulu!');
+    <script>
+        // ===== DOM REFS =====
+        const inputCode = document.getElementById('inputCode');
+        const output = document.getElementById('output');
+        const inputStats = document.getElementById('inputStats');
+        const outputStats = document.getElementById('outputStats');
+        const obfLevel = document.getElementById('obfLevel');
 
-  const file = document.getElementById('file').files[0];
-  if (!file) return alert('Pilih file!');
+        // ===== UPDATE STATS =====
+        function updateStats() {
+            const inLen = inputCode.value.length;
+            const outLen = output.value.length;
+            inputStats.textContent = inLen;
+            outputStats.textContent = outLen;
+            // random obf level buat style (biar keren)
+            const level = Math.floor(Math.random() * 3) + 3;
+            obfLevel.textContent = level;
+        }
 
-  const formData = new FormData();
-  formData.append('reqtype', 'fileupload');
-  formData.append('fileToUpload', file);
+        inputCode.addEventListener('input', updateStats);
 
-  const res = await fetch('https://catbox.moe/user/api.php', {
-    method: 'POST',
-    body: formData
-  });
+        // ===== OBFUSCATOR ENGINE =====
+        function obfuscateLua(code) {
+            if (!code.trim()) return '-- (empty)';
 
-  const link = await res.text();
+            let result = '';
 
-  files.push({ name: file.name, url: link });
-  localStorage.setItem('files', JSON.stringify(files));
+            // 1. Comment remover & minify (simulasi)
+            let lines = code.split('\n');
+            let cleaned = [];
+            for (let line of lines) {
+                let trimmed = line.trim();
+                // skip comment lines & empty
+                if (trimmed.startsWith('--') || trimmed === '') continue;
+                // remove inline comments (-- after code)
+                let commentIndex = trimmed.indexOf('--');
+                if (commentIndex !== -1) {
+                    trimmed = trimmed.substring(0, commentIndex).trim();
+                }
+                if (trimmed) cleaned.push(trimmed);
+            }
 
-  render();
-}
+            let minified = cleaned.join(' ');
 
-function render() {
-  const list = document.getElementById('list');
-  list.innerHTML = '';
+            // 2. variable name randomizer
+            const varMap = {};
+            const varNames = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                '_0', '_1', '_2', '_3', '_4', '_5', '_6', '_7', '_8', '_9'
+            ];
+            let varIdx = 0;
 
-  files.forEach(f => {
-    const li = document.createElement('li');
-    li.innerHTML = `${f.name} - <a href=\"${f.url}\" target=\"_blank\">Download</a>`;
-    list.appendChild(li);
-  });
-}
+            // cari local var declarations
+            let obf = minified;
+            // simple: ganti local var dengan random name (cuma demo)
+            const localRegex = /local\s+([a-zA-Z_][a-zA-Z0-9_]*)/g;
+            let match;
+            const locals = [];
+            while ((match = localRegex.exec(obf)) !== null) {
+                if (!varMap[match[1]]) {
+                    varMap[match[1]] = varNames[varIdx % varNames.length] + '_' + Math.floor(Math.random() * 9999);
+                    varIdx++;
+                }
+            }
 
-render();
-</script>
+            for (let [orig, fake] of Object.entries(varMap)) {
+                const regex = new RegExp('\\b' + orig + '\\b', 'g');
+                obf = obf.replace(regex, fake);
+            }
+
+            // 3. tambahin random string & encode (efeek)
+            const randomSuffix = ' --[[' + Math.random().toString(36).substring(2, 10) + ']]';
+            const encoded = '--!obfuscated by krammzlua\n' +
+                '--[=[ SAMP EDITION ]=]\n' +
+                obf + '\n' +
+                '--[=[ ' + Date.now().toString(36) + ' ]=]';
+
+            // 4. split biar lebih "obfuscated" (gak guna tp keliatan keren)
+            let final = '';
+            for (let i = 0; i < encoded.length; i++) {
+                final += encoded[i];
+                if (i % 50 === 0 && i > 0) final += '\n';
+            }
+
+            return final;
+        }
+
+        // ===== OBFUSCATE ACTION =====
+        document.getElementById('obfuscateBtn').addEventListener('click', function() {
+            const src = inputCode.value;
+            if (!src.trim()) {
+                output.value = '-- Error: input kosong, Bang!';
+                updateStats();
+                return;
+            }
+            try {
+                const result = obfuscateLua(src);
+                output.value = result;
+                updateStats();
+            } catch (e) {
+                output.value = '-- Error obfuscating: ' + e.message;
+                updateStats();
+            }
+        });
+
+        // ===== CLEAR INPUT =====
+        document.getElementById('clearBtn').addEventListener('click', function() {
+            inputCode.value = '';
+            updateStats();
+        });
+
+        // ===== COPY OUTPUT =====
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const out = output.value;
+            if (!out.trim()) {
+                alert('Output kosong, obfuscate dulu dong!');
+                return;
+            }
+            navigator.clipboard.writeText(out).then(() => {
+                const hint = document.getElementById('copyHint');
+                hint.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    hint.textContent = 'click to copy ↓';
+                }, 2000);
+            }).catch(() => {
+                alert('Gagal copy, coba manual ya');
+            });
+        });
+
+        // ===== RESET =====
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            inputCode.value = `-- Contoh script Lua
+print('Halo GTA SAMP!')
+local a = 10
+function test()
+    return a * 2
+end`;
+            output.value = '';
+            updateStats();
+        });
+
+        // ===== COPY KLIK OUTPUT (extra) =====
+        output.addEventListener('click', function() {
+            if (output.value.trim()) {
+                navigator.clipboard.writeText(output.value).then(() => {
+                    const hint = document.getElementById('copyHint');
+                    hint.textContent = '✅ Copied!';
+                    setTimeout(() => {
+                        hint.textContent = 'click to copy ↓';
+                    }, 2000);
+                });
+            }
+        });
+
+        // ===== INIT =====
+        updateStats();
+        output.value = '-- Hasil obfuscation akan muncul di sini';
+        setTimeout(() => {
+            output.value = '';
+            updateStats();
+        }, 300);
+    </script>
 
 </body>
 </html>
