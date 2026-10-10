@@ -128,10 +128,15 @@ footer{text-align:center;font-weight:700;padding:18px;border-top:4px solid var(-
 
 <script>
 const ADMIN={u:'krammz',p:'apa123'};
+const API='https://jsonblob.com/api/jsonBlob';
+/* Setelah upload pertama, ID muncul. Tempel ID itu di sini lalu deploy ulang supaya publik bisa lihat */
+const INDEX_ID='';
 const CATS=['Semua','MonetLoader','GTA SA-MP','CLEO','Tools','Lainnya'];
-let isAdmin=sessionStorage.getItem('adm')==='1',cat='Semua',items=[],db;
+const MAX=3*1024*1024;
+let isAdmin=sessionStorage.getItem('adm')==='1',cat='Semua',items=[];
+let indexId=INDEX_ID||localStorage.getItem('kz_idx')||'';
 const $=id=>document.getElementById(id);
-const toast=t=>{const e=$('toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2200)};
+const toast=t=>{const e=$('toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2600)};
 
 /* loader 1..5 detik */
 (function(){let n=1;const f=$('fill'),num=$('num');
@@ -139,24 +144,34 @@ const toast=t=>{const e=$('toast');e.textContent=t;e.classList.add('on');setTime
  const t=setInterval(()=>{n++;if(n>5){clearInterval(t);$('loader').classList.add('out');setTimeout(()=>$('loader').remove(),500);return}
   num.textContent=n;f.style.width=(n*20)+'%'},1000);})();
 
-/* IndexedDB */
-function openDB(){return new Promise(r=>{const q=indexedDB.open('krammzshare',1);
- q.onupgradeneeded=()=>q.result.createObjectStore('f',{keyPath:'id'});
- q.onsuccess=()=>{db=q.result;r()}})}
-const all=()=>new Promise(r=>{const q=db.transaction('f').objectStore('f').getAll();q.onsuccess=()=>r(q.result)});
-const put=o=>new Promise(r=>{const t=db.transaction('f','readwrite');t.objectStore('f').put(o);t.oncomplete=r});
-const del=id=>new Promise(r=>{const t=db.transaction('f','readwrite');t.objectStore('f').delete(id);t.oncomplete=r});
-
+const H={'Content-Type':'application/json',Accept:'application/json'};
+async function getIndex(){
+ if(!indexId)return [];
+ try{const r=await fetch(API+'/'+indexId,{headers:H,cache:'no-store'});
+  if(r.ok){const j=await r.json();return j.files||[]}}catch(e){}
+ return [];
+}
+async function saveIndex(files){
+ const body=JSON.stringify({files});
+ if(!indexId){
+  const r=await fetch(API,{method:'POST',headers:H,body});
+  const loc=r.headers.get('Location')||'';
+  indexId=loc.split('/').pop();
+  if(!indexId)throw new Error('gagal buat index');
+  localStorage.setItem('kz_idx',indexId);
+  prompt('Salin ID ini, tempel ke INDEX_ID di index.html lalu deploy ulang agar publik bisa lihat:',indexId);
+ }else{
+  const r=await fetch(API+'/'+indexId,{method:'PUT',headers:H,body});
+  if(!r.ok)throw new Error('gagal simpan');
+ }
+}
 const fmt=b=>b>1048576?(b/1048576).toFixed(1)+' MB':(b/1024).toFixed(1)+' KB';
 const dt=d=>new Date(d).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'});
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const b64=f=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)});
 
 async function load(){
- items=await all();
- /* file publik statis: letakkan di files.json (opsional) */
- try{const r=await fetch('files.json',{cache:'no-store'});if(r.ok){const j=await r.json();
-  j.forEach(x=>items.push({...x,id:'s_'+x.name,static:true,date:x.date||Date.now()}))}}catch(e){}
- items.sort((a,b)=>b.date-a.date);render();
+ items=await getIndex();items.sort((a,b)=>b.date-a.date);render();
 }
 function render(){
  const q=$('q').value.toLowerCase();
@@ -176,10 +191,16 @@ function render(){
 $('list').addEventListener('click',async e=>{
  const d=e.target.closest('[data-d]'),x=e.target.closest('[data-x]');
  if(d){e.preventDefault();const i=items.find(v=>v.id===d.dataset.d);
-  const a=document.createElement('a');
-  if(i.static){a.href=i.url}else{a.href=URL.createObjectURL(i.blob)}
-  a.download=i.name;document.body.appendChild(a);a.click();a.remove();toast('Mengunduh '+i.name)}
- if(x){if(!confirm('Hapus file ini?'))return;await del(x.dataset.x);await load();toast('Terhapus')}
+  try{toast('Menyiapkan...');
+   const r=await fetch(API+'/'+i.id,{headers:H});const j=await r.json();
+   const blob=await (await fetch(j.data)).blob();
+   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=i.name;
+   document.body.appendChild(a);a.click();a.remove();toast('Mengunduh '+i.name);
+  }catch(err){toast('Gagal download')}}
+ if(x){if(!confirm('Hapus file ini?'))return;
+  try{fetch(API+'/'+x.dataset.x,{method:'DELETE'}).catch(()=>{});
+   items=items.filter(v=>v.id!==x.dataset.x);await saveIndex(items);render();toast('Terhapus')}
+  catch(err){toast('Gagal hapus');load()}}
 });
 $('chips').innerHTML=CATS.map(c=>`<button class="chip ${c==='Semua'?'on':''}">${c}</button>`).join('');
 $('chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;
@@ -197,13 +218,25 @@ $('doLogin').onclick=()=>{if($('u').value===ADMIN.u&&$('p').value===ADMIN.p){isA
 $('upBtn').onclick=()=>$('mUp').classList.add('on');
 $('cancelU').onclick=()=>$('mUp').classList.remove('on');
 $('file').onchange=e=>{const f=e.target.files[0];$('dropT').textContent=f?'✅ '+f.name+' ('+fmt(f.size)+')':'📁 Pilih file'};
-$('doUp').onclick=async()=>{const f=$('file').files[0];if(!f)return toast('Pilih file dulu');
- await put({id:Date.now()+'_'+f.name,name:f.name,size:f.size,date:Date.now(),desc:$('desc').value.trim(),cat:$('cat').value,blob:f});
- $('file').value='';$('desc').value='';$('dropT').textContent='📁 Pilih file';
- $('mUp').classList.remove('on');await load();toast('Upload sukses 💥')};
+$('doUp').onclick=async()=>{
+ const f=$('file').files[0];if(!f)return toast('Pilih file dulu');
+ if(f.size>MAX)return toast('Maksimal 3 MB');
+ const btn=$('doUp');btn.disabled=true;btn.textContent='Uploading...';
+ try{
+  const data=await b64(f);
+  const r=await fetch(API,{method:'POST',headers:H,body:JSON.stringify({name:f.name,data})});
+  const id=(r.headers.get('Location')||'').split('/').pop();
+  if(!id)throw new Error('upload gagal');
+  const cur=await getIndex();
+  cur.push({id,name:f.name,size:f.size,date:Date.now(),desc:$('desc').value.trim(),cat:$('cat').value});
+  await saveIndex(cur);
+  $('file').value='';$('desc').value='';$('dropT').textContent='📁 Pilih file';
+  $('mUp').classList.remove('on');await load();toast('Upload sukses 💥');
+ }catch(err){toast('Upload gagal, coba lagi')}
+ btn.disabled=false;btn.textContent='Upload';
+};
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('on')}));
-
-openDB().then(()=>{load();adminUI()});
+load();adminUI();
 </script>
 </body>
 </html>
