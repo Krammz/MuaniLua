@@ -1,534 +1,209 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lua Obfuscator Pro · WeAreDevs API</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: #070a11;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Inter', sans-serif;
-            padding: 18px;
-        }
-        .container {
-            background: #0e131f;
-            border-radius: 36px;
-            padding: 38px 34px;
-            max-width: 1100px;
-            width: 100%;
-            border: 1px solid #1e2840;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.9);
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 22px;
-            flex-wrap: wrap;
-        }
-        .header h1 {
-            font-size: 30px;
-            font-weight: 800;
-            color: #eef4ff;
-            letter-spacing: -0.5px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-        .header h1 span {
-            background: #1f2a42;
-            padding: 4px 18px;
-            border-radius: 40px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #6d8bcb;
-            border: 1px solid #2d3d62;
-        }
-        .status-badge {
-            background: #15202f;
-            padding: 8px 22px;
-            border-radius: 60px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #7f99cc;
-            border: 1px solid #263755;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .status-badge .dot {
-            width: 10px;
-            height: 10px;
-            background: #4cda7a;
-            border-radius: 50%;
-            box-shadow: 0 0 20px #4cda7a66;
-            animation: pulse 1.6s infinite;
-        }
-        @keyframes pulse {
-            0% { opacity: 0.5; transform: scale(0.9); }
-            50% { opacity: 1; transform: scale(1.2); }
-            100% { opacity: 0.5; transform: scale(0.9); }
-        }
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 16px 0 18px;
-        }
-        .label-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .label-group label {
-            font-size: 13px;
-            font-weight: 600;
-            color: #b2c7ee;
-            letter-spacing: 0.2px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .label-group label i {
-            font-style: normal;
-            background: #1a253c;
-            padding: 0 12px;
-            border-radius: 14px;
-            font-size: 10px;
-            color: #6178a3;
-        }
-        textarea, select {
-            background: #080d18;
-            border: 1px solid #232f4a;
-            border-radius: 18px;
-            padding: 16px 18px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            color: #e2ecff;
-            width: 100%;
-            outline: none;
-            transition: 0.2s;
-        }
-        textarea {
-            min-height: 200px;
-            line-height: 1.7;
-            resize: vertical;
-        }
-        textarea:focus, select:focus {
-            border-color: #4f8bff;
-            box-shadow: 0 0 0 4px rgba(79, 139, 255, 0.12);
-        }
-        select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236a82b0' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 18px center;
-            padding-right: 44px;
-            cursor: pointer;
-        }
-        .btn-row {
-            display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
-            margin: 16px 0 18px;
-        }
-        .btn {
-            border: none;
-            border-radius: 60px;
-            padding: 15px 36px;
-            font-weight: 600;
-            font-size: 15px;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-            font-family: 'Inter', sans-serif;
-            flex: 1 1 auto;
-            justify-content: center;
-            border: 1px solid transparent;
-        }
-        .btn-primary {
-            background: #2563eb;
-            color: #fff;
-            border-color: #3b7aff;
-            box-shadow: 0 6px 24px rgba(37, 99, 235, 0.3);
-        }
-        .btn-primary:hover {
-            background: #3b7aff;
-            transform: scale(1.02);
-        }
-        .btn-secondary {
-            background: #1a233a;
-            color: #b7ccf5;
-            border-color: #2f3d60;
-        }
-        .btn-secondary:hover {
-            background: #263755;
-            border-color: #405681;
-        }
-        .btn-danger {
-            background: #8b2d33;
-            color: #fff;
-            border-color: #b13a42;
-        }
-        .btn-danger:hover {
-            background: #b13a42;
-        }
-        .output-box {
-            background: #060b14;
-            border-radius: 22px;
-            border: 1px solid #1b253e;
-            padding: 6px;
-            margin-top: 12px;
-        }
-        .output-top {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 20px 6px 20px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #5d74a0;
-            letter-spacing: 0.4px;
-        }
-        .output-top span {
-            background: #111b2e;
-            padding: 4px 16px;
-            border-radius: 30px;
-            border: 1px solid #253454;
-        }
-        .output-body {
-            background: #04080f;
-            border-radius: 16px;
-            padding: 22px 26px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            line-height: 1.8;
-            color: #d4e2ff;
-            white-space: pre-wrap;
-            word-break: break-word;
-            min-height: 140px;
-            max-height: 380px;
-            overflow-y: auto;
-            border: 1px solid #141e34;
-        }
-        .output-body .placeholder {
-            color: #324466;
-            font-style: italic;
-        }
-        .footer {
-            margin-top: 26px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: #40547a;
-            border-top: 1px solid #1a243c;
-            padding-top: 20px;
-            flex-wrap: wrap;
-        }
-        .footer .tag {
-            background: #0f182b;
-            padding: 4px 18px;
-            border-radius: 40px;
-            border: 1px solid #23314f;
-            color: #7086b5;
-        }
-        .copy-feedback {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1b2942;
-            padding: 14px 36px;
-            border-radius: 60px;
-            color: #c6dcff;
-            border: 1px solid #3b5180;
-            font-weight: 500;
-            backdrop-filter: blur(14px);
-            opacity: 0;
-            transition: 0.25s;
-            pointer-events: none;
-            font-size: 14px;
-        }
-        .copy-feedback.show {
-            opacity: 1;
-            bottom: 40px;
-        }
-        @media (max-width: 750px) {
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-            .container {
-                padding: 22px 16px;
-            }
-            .header h1 {
-                font-size: 24px;
-            }
-        }
-        ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #090f1c;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2f446a;
-            border-radius: 10px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KrammzLua Share</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--y:#ffe642;--g:#5fdc3e;--k:#111;--w:#fff;--cr:#fff5a8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--k);background:var(--y);
+background-image:radial-gradient(#0002 2px,transparent 2px);background-size:26px 26px;min-height:100vh}
+.bang{font-family:'Bangers','Impact',sans-serif;letter-spacing:2px}
+/* loader */
+#loader{position:fixed;inset:0;z-index:99;background:var(--y);background-image:radial-gradient(#0003 3px,transparent 3px);background-size:22px 22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:.4s}
+#loader.out{opacity:0;transform:scale(1.4);pointer-events:none}
+.burst{width:260px;height:260px;display:grid;place-items:center;background:var(--g);border:6px solid var(--k);
+clip-path:polygon(50% 0,60% 18%,80% 6%,78% 28%,100% 30%,86% 48%,100% 66%,78% 70%,82% 92%,60% 82%,50% 100%,40% 82%,18% 92%,22% 70%,0 66%,14% 48%,0 30%,22% 28%,20% 6%,40% 18%);animation:pulse .5s infinite alternate}
+.burst span{font-size:110px;color:var(--w);text-shadow:5px 5px 0 var(--k),-3px -3px 0 var(--k),3px -3px 0 var(--k),-3px 3px 0 var(--k);transform:rotate(-6deg)}
+@keyframes pulse{to{transform:scale(1.08) rotate(3deg)}}
+.lt{font-size:34px;text-shadow:3px 3px 0 var(--w)}
+.bar{width:260px;height:26px;border:4px solid var(--k);background:var(--w);box-shadow:5px 5px 0 var(--k);border-radius:8px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--g);transition:width .9s linear}
+/* header */
+header{background:var(--w);border-bottom:4px solid var(--k);display:flex;align-items:center;justify-content:space-between;padding:12px 16px;position:sticky;top:0;z-index:20}
+.logo{display:flex;align-items:center;gap:8px;font-weight:700}
+.logo b{width:44px;height:44px;display:grid;place-items:center;background:var(--g);border:3px solid var(--k);border-radius:10px;font-size:26px;box-shadow:3px 3px 0 var(--k)}
+.tag{background:var(--k);color:var(--y);font-size:11px;padding:3px 8px;border-radius:6px;transform:rotate(-4deg)}
+.btn{font-family:inherit;font-weight:700;font-size:16px;border:3px solid var(--k);border-radius:12px;padding:10px 18px;cursor:pointer;background:var(--k);color:var(--w);box-shadow:4px 4px 0 #0007;transition:.1s}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 #0007}
+.btn.g{background:var(--g);color:var(--k)}.btn.r{background:#ff4d4d;color:var(--k)}
+.hdr-r{display:flex;gap:10px;align-items:center;font-weight:700}
+main{max-width:760px;margin:0 auto;padding:22px 16px 40px}
+h1{font-size:clamp(40px,10vw,64px);line-height:1;text-shadow:4px 4px 0 var(--w)}
+.sub{margin:6px 0 18px;font-weight:700}
+.search{display:flex;gap:10px;align-items:center;background:var(--w);border:4px solid var(--k);border-radius:14px;padding:12px 16px;box-shadow:6px 6px 0 var(--k);margin-bottom:18px}
+.search input{border:0;outline:0;flex:1;font:inherit;font-size:18px;background:none}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.chip{font:inherit;font-weight:700;border:3px solid var(--k);background:var(--w);border-radius:30px;padding:9px 18px;cursor:pointer}
+.chip.on{background:var(--k);color:var(--w)}
+.count{display:inline-block;border:3px solid var(--k);background:var(--w);border-radius:30px;padding:8px 18px;font-weight:700;margin-bottom:16px}
+.card{background:var(--w);border:4px solid var(--k);border-radius:14px;box-shadow:7px 7px 0 var(--k);margin-bottom:22px;overflow:hidden;animation:pop .35s both}
+@keyframes pop{from{transform:scale(.85) rotate(-2deg);opacity:0}}
+.row{display:flex}
+.ext{background:var(--cr);border-right:4px solid var(--k);padding:14px;display:grid;place-items:center;min-width:92px}
+.ext span{background:var(--g);border:3px solid var(--k);border-radius:10px;padding:12px 8px;font-weight:700;font-size:14px;box-shadow:3px 3px 0 var(--k);text-transform:uppercase}
+.info{padding:14px 16px;flex:1;min-width:0}
+.info h3{font-size:22px;word-break:break-all}
+.info p{color:#555;margin:4px 0 10px;word-break:break-word}
+.meta{display:flex;justify-content:space-between;color:#444;font-weight:700;font-size:15px}
+.acts{display:flex;border-top:4px solid var(--k)}
+.acts a,.acts button{flex:1;text-align:center;text-decoration:none;font:inherit;font-weight:700;font-size:18px;padding:14px;border:0;cursor:pointer;background:var(--g);color:var(--k)}
+.acts button{background:#ff4d4d;flex:0 0 120px;border-left:4px solid var(--k)}
+.acts a:active,.acts button:active{filter:brightness(.85)}
+.empty{text-align:center;padding:30px;font-size:30px}
+.wa{background:var(--g);border:4px solid var(--k);border-radius:14px;padding:26px 18px;box-shadow:7px 7px 0 var(--k);margin-top:30px}
+.wa h2{font-size:clamp(34px,8vw,48px);line-height:1;margin-bottom:16px}
+.wa a{display:block;text-align:center;text-decoration:none;background:var(--k);color:var(--w);font-weight:700;font-size:20px;padding:18px;border-radius:14px;border:3px solid var(--k)}
+.exts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:26px 0 8px}
+.exts span{background:var(--y);border:3px solid var(--k);border-radius:10px;padding:6px 14px;font-weight:700;box-shadow:3px 3px 0 var(--k)}
+footer{text-align:center;font-weight:700;padding:18px;border-top:4px solid var(--k);background:var(--y)}
+/* modal */
+.modal{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;z-index:60;padding:16px}
+.modal.on{display:flex}
+.box{background:var(--w);border:5px solid var(--k);border-radius:18px;box-shadow:9px 9px 0 var(--k);padding:22px;width:100%;max-width:420px;animation:pop .3s}
+.box h2{font-size:38px;margin-bottom:12px}
+.box input,.box select,.box textarea{width:100%;font:inherit;border:3px solid var(--k);border-radius:10px;padding:11px;margin-bottom:12px;background:var(--cr)}
+.drop{border:4px dashed var(--k);border-radius:12px;padding:20px;text-align:center;font-weight:700;margin-bottom:12px;background:var(--cr);cursor:pointer}
+.box .btns{display:flex;gap:10px}.box .btns .btn{flex:1}
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--k);color:var(--y);padding:12px 22px;border-radius:12px;font-weight:700;z-index:90;transition:.3s;border:3px solid var(--y)}
+#toast.on{transform:translateX(-50%)}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🔮 Lua Obfuscator <span>WeAreDevs</span></h1>
-            <div class="status-badge"><span class="dot"></span> API · LIVE</div>
-        </div>
 
-        <div style="color:#6a82b0; font-size:14px; margin-bottom:10px; border-left:3px solid #2b6b4a; padding-left:16px; background:#0b111f; border-radius:0 12px 12px 0;">
-            ⚡ Masukkan script Lua, pilih level, klik tombol — hasil langsung jadi.
-        </div>
+<div id="loader">
+  <div class="burst"><span class="bang" id="num">1</span></div>
+  <div class="bar"><i id="fill"></i></div>
+  <div class="lt bang">LOADING...</div>
+</div>
 
-        <div class="grid-2">
-            <div class="label-group">
-                <label>📜 Script Input <i>Lua 5.1+</i></label>
-                <textarea id="inputScript">-- contoh script
-local function halo(nama)
-    print("Halo " .. nama)
-end
-halo("Kaizen")
-for i = 1, 3 do
-    print("iterasi " .. i)
-end</textarea>
-            </div>
-            <div class="label-group">
-                <label>⚙️ Level Obfuscation</label>
-                <select id="obfLevel">
-                    <option value="light">🌱 Light (rename + string)</option>
-                    <option value="medium" selected>🔥 Medium (flow + literal)</option>
-                    <option value="aggressive">💀 Aggressive (dead code)</option>
-                    <option value="wearedevs">🧬 WeAreDevs Max</option>
-                </select>
-                <label style="margin-top:12px;">🧩 Extra Chaos</label>
-                <select id="extraOpt">
-                    <option value="none">None</option>
-                    <option value="stringencode">String Encode</option>
-                    <option value="mathrandom">Math.random injection</option>
-                    <option value="all">All-in-one</option>
-                </select>
-            </div>
-        </div>
+<header>
+  <div class="logo"><b class="bang">K</b>KRAMMZLUA <span class="tag">SHARE</span></div>
+  <div class="hdr-r">
+    <span id="adm" style="display:none">ADMIN</span>
+    <button class="btn g" id="upBtn" style="display:none">+ Upload</button>
+    <button class="btn" id="loginBtn">Masuk</button>
+  </div>
+</header>
 
-        <div class="btn-row">
-            <button class="btn btn-primary" id="obfBtn">⚡ Obfuscate</button>
-            <button class="btn btn-secondary" id="copyBtn">📋 Copy</button>
-            <button class="btn btn-danger" id="clearBtn">✕ Clear</button>
-        </div>
+<main>
+  <h1 class="bang">Download file komunitas.</h1>
+  <div class="sub"><span id="total">0</span> file tersedia</div>
+  <div class="search">🔍<input id="q" placeholder="Cari nama file"></div>
+  <div class="chips" id="chips"></div>
+  <div class="count" id="cnt">0 file</div>
+  <div id="list"></div>
 
-        <div class="output-box">
-            <div class="output-top">
-                <span>⬤ OUTPUT · OBFUSCATED</span>
-                <span id="charCount">0 chars</span>
-            </div>
-            <div class="output-body" id="outputBody">
-                <span class="placeholder">⌛ Hasil obfuscation akan tampil di sini...</span>
-            </div>
-        </div>
+  <div class="wa">
+    <h2 class="bang">File baru masuk lewat channel WhatsApp.</h2>
+    <a href="https://whatsapp.com/channel/0029Vb1emh39Gv7QRTZwp02u" target="_blank" rel="noopener">💬 Gabung channel</a>
+  </div>
+  <div class="exts"><span>.lua</span><span>.cs</span><span>.luac</span><span>.zip</span><span>.dll</span><span>.cleo</span><span>.asi</span><span>.csi</span><span>.lib</span><span>.apk</span><span>.rar</span><span>.7z</span></div>
+</main>
+<footer>© 2026 KrammzLua Share</footer>
 
-        <div class="footer">
-            <span class="tag">🔗 wearedevs.net/lua-obf</span>
-            <span class="tag">⚡ NASI · by Kaizen</span>
-        </div>
-    </div>
+<!-- login -->
+<div class="modal" id="mLogin"><div class="box">
+  <h2 class="bang">Login Admin</h2>
+  <input id="u" placeholder="Username" autocomplete="off">
+  <input id="p" type="password" placeholder="Password">
+  <div class="btns"><button class="btn" id="cancelL">Batal</button><button class="btn g" id="doLogin">Masuk</button></div>
+</div></div>
 
-    <div id="copyFeedback" class="copy-feedback">✅ Tersalin</div>
+<!-- upload -->
+<div class="modal" id="mUp"><div class="box">
+  <h2 class="bang">Upload File</h2>
+  <label class="drop" for="file" id="dropT">📁 Pilih file (.lua .cleo .asi .cs .csi .lib .zip ...)</label>
+  <input type="file" id="file" style="display:none">
+  <input id="desc" placeholder="Deskripsi (contoh: /bmbot fitur lengkap)">
+  <select id="cat">
+    <option>MonetLoader</option><option>GTA SA-MP</option><option>CLEO</option><option>Tools</option><option>Lainnya</option>
+  </select>
+  <div class="btns"><button class="btn" id="cancelU">Batal</button><button class="btn g" id="doUp">Upload</button></div>
+</div></div>
 
-    <script>
-        (function() {
-            const inputScript = document.getElementById('inputScript');
-            const obfLevel = document.getElementById('obfLevel');
-            const extraOpt = document.getElementById('extraOpt');
-            const obfBtn = document.getElementById('obfBtn');
-            const copyBtn = document.getElementById('copyBtn');
-            const clearBtn = document.getElementById('clearBtn');
-            const outputBody = document.getElementById('outputBody');
-            const charCount = document.getElementById('charCount');
-            const copyFeedback = document.getElementById('copyFeedback');
+<div id="toast"></div>
 
-            let lastOutput = '';
+<script>
+const ADMIN={u:'krammz',p:'apa123'};
+const CATS=['Semua','MonetLoader','GTA SA-MP','CLEO','Tools','Lainnya'];
+let isAdmin=sessionStorage.getItem('adm')==='1',cat='Semua',items=[],db;
+const $=id=>document.getElementById(id);
+const toast=t=>{const e=$('toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2200)};
 
-            // ---------- CORE OBFUSCATOR (PRESERVING STRUCTURE) ----------
-            function obfuscateLua(code, level, extra) {
-                if (!code || code.trim() === '') return '-- (kosong)';
+/* loader 1..5 detik */
+(function(){let n=1;const f=$('fill'),num=$('num');
+ setTimeout(()=>f.style.width='20%',50);
+ const t=setInterval(()=>{n++;if(n>5){clearInterval(t);$('loader').classList.add('out');setTimeout(()=>$('loader').remove(),500);return}
+  num.textContent=n;f.style.width=(n*20)+'%'},1000);})();
 
-                let out = code;
+/* IndexedDB */
+function openDB(){return new Promise(r=>{const q=indexedDB.open('krammzshare',1);
+ q.onupgradeneeded=()=>q.result.createObjectStore('f',{keyPath:'id'});
+ q.onsuccess=()=>{db=q.result;r()}})}
+const all=()=>new Promise(r=>{const q=db.transaction('f').objectStore('f').getAll();q.onsuccess=()=>r(q.result)});
+const put=o=>new Promise(r=>{const t=db.transaction('f','readwrite');t.objectStore('f').put(o);t.oncomplete=r});
+const del=id=>new Promise(r=>{const t=db.transaction('f','readwrite');t.objectStore('f').delete(id);t.oncomplete=r});
 
-                // 1. hapus komentar (biar bersih)
-                out = out.replace(/--[^\n]*/g, '');
-                out = out.replace(/\/\*[\s\S]*?\*\//g, '');
+const fmt=b=>b>1048576?(b/1048576).toFixed(1)+' MB':(b/1024).toFixed(1)+' KB';
+const dt=d=>new Date(d).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'});
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-                // 2. rename local variables (hanya yang benar2 local)
-                const varMap = {};
-                let counter = 0;
-                const reserved = ['print', 'function', 'end', 'if', 'then', 'else', 'elseif', 'for', 'do', 'while', 'repeat', 'until', 'local', 'return', 'break', 'nil', 'true', 'false', 'and', 'or', 'not', 'in', 'goto', 'self', 'super'];
-                
-                // cari semua local var
-                const localRegex = /local\s+([a-zA-Z_][a-zA-Z0-9_]*)/g;
-                let m;
-                const localVars = [];
-                while ((m = localRegex.exec(out)) !== null) {
-                    if (!reserved.includes(m[1]) && !varMap[m[1]]) {
-                        const newName = '_l' + (counter++) + '_' + String.fromCharCode(97 + (counter % 26));
-                        varMap[m[1]] = newName;
-                    }
-                }
+async function load(){
+ items=await all();
+ /* file publik statis: letakkan di files.json (opsional) */
+ try{const r=await fetch('files.json',{cache:'no-store'});if(r.ok){const j=await r.json();
+  j.forEach(x=>items.push({...x,id:'s_'+x.name,static:true,date:x.date||Date.now()}))}}catch(e){}
+ items.sort((a,b)=>b.date-a.date);render();
+}
+function render(){
+ const q=$('q').value.toLowerCase();
+ const list=items.filter(i=>(cat==='Semua'||i.cat===cat)&&i.name.toLowerCase().includes(q));
+ $('total').textContent=items.length;$('cnt').textContent=list.length+' file';
+ $('list').innerHTML=list.length?'':'<div class="empty bang">Belum ada file 💥</div>';
+ list.forEach(i=>{
+  const ext=(i.name.split('.').pop()||'file');
+  const c=document.createElement('div');c.className='card';
+  c.innerHTML=`<div class="row"><div class="ext"><span>${esc(ext)}</span></div>
+  <div class="info"><h3>${esc(i.name)}</h3>${i.desc?`<p>${esc(i.desc)}</p>`:'<p>&nbsp;</p>'}
+  <div class="meta"><span>${fmt(i.size)}</span><span>${dt(i.date)}</span></div></div></div>
+  <div class="acts"><a href="#" data-d="${esc(i.id)}">Download</a>${isAdmin?`<button data-x="${esc(i.id)}">Hapus</button>`:''}</div>`;
+  $('list').appendChild(c);
+ });
+}
+$('list').addEventListener('click',async e=>{
+ const d=e.target.closest('[data-d]'),x=e.target.closest('[data-x]');
+ if(d){e.preventDefault();const i=items.find(v=>v.id===d.dataset.d);
+  const a=document.createElement('a');
+  if(i.static){a.href=i.url}else{a.href=URL.createObjectURL(i.blob)}
+  a.download=i.name;document.body.appendChild(a);a.click();a.remove();toast('Mengunduh '+i.name)}
+ if(x){if(!confirm('Hapus file ini?'))return;await del(x.dataset.x);await load();toast('Terhapus')}
+});
+$('chips').innerHTML=CATS.map(c=>`<button class="chip ${c==='Semua'?'on':''}">${c}</button>`).join('');
+$('chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;
+ cat=b.textContent;[...$('chips').children].forEach(x=>x.classList.toggle('on',x===b));render()});
+$('q').addEventListener('input',render);
 
-                // ganti semua occurences (word boundary)
-                for (const [orig, neo] of Object.entries(varMap)) {
-                    const regex = new RegExp('\\b' + orig + '\\b', 'g');
-                    out = out.replace(regex, neo);
-                }
+/* admin ui */
+function adminUI(){$('upBtn').style.display=isAdmin?'':'none';$('adm').style.display=isAdmin?'':'none';
+ $('loginBtn').textContent=isAdmin?'Keluar':'Masuk';render()}
+$('loginBtn').onclick=()=>{if(isAdmin){isAdmin=false;sessionStorage.removeItem('adm');adminUI();toast('Logout');return}
+ $('mLogin').classList.add('on')};
+$('cancelL').onclick=()=>$('mLogin').classList.remove('on');
+$('doLogin').onclick=()=>{if($('u').value===ADMIN.u&&$('p').value===ADMIN.p){isAdmin=true;sessionStorage.setItem('adm','1');
+ $('mLogin').classList.remove('on');$('u').value=$('p').value='';adminUI();toast('Login berhasil 💥')}else toast('Akun salah!')};
+$('upBtn').onclick=()=>$('mUp').classList.add('on');
+$('cancelU').onclick=()=>$('mUp').classList.remove('on');
+$('file').onchange=e=>{const f=e.target.files[0];$('dropT').textContent=f?'✅ '+f.name+' ('+fmt(f.size)+')':'📁 Pilih file'};
+$('doUp').onclick=async()=>{const f=$('file').files[0];if(!f)return toast('Pilih file dulu');
+ await put({id:Date.now()+'_'+f.name,name:f.name,size:f.size,date:Date.now(),desc:$('desc').value.trim(),cat:$('cat').value,blob:f});
+ $('file').value='';$('desc').value='';$('dropT').textContent='📁 Pilih file';
+ $('mUp').classList.remove('on');await load();toast('Upload sukses 💥')};
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('on')}));
 
-                // 3. string encoding (jika dipilih)
-                if (extra === 'stringencode' || extra === 'all' || level === 'wearedevs') {
-                    out = out.replace(/"([^"]*)"/g, function(match, str) {
-                        if (str.length < 2) return match;
-                        let enc = '';
-                        for (let i = 0; i < str.length; i++) {
-                            enc += '\\' + str.charCodeAt(i).toString(8).padStart(3, '0');
-                        }
-                        return '"' + enc + '"';
-                    });
-                    // single quote juga
-                    out = out.replace(/'([^']*)'/g, function(match, str) {
-                        if (str.length < 2) return match;
-                        let enc = '';
-                        for (let i = 0; i < str.length; i++) {
-                            enc += '\\' + str.charCodeAt(i).toString(8).padStart(3, '0');
-                        }
-                        return '"' + enc + '"';
-                    });
-                }
-
-                // 4. control flow (medium+)
-                if (level === 'medium' || level === 'aggressive' || level === 'wearedevs') {
-                    // ubah if/for/while dengan tambahan do-end dummy
-                    out = out.replace(/\b(if|for|while)\s+(.+?)\s+then/g, function(m, kw, cond) {
-                        return kw + ' ' + cond + ' then --[[cf]] ';
-                    });
-                }
-
-                // 5. aggressive: dead code injection
-                if (level === 'aggressive' || level === 'wearedevs') {
-                    let dead = '\n-- dead code\nlocal _d=0\nfor _i=1,2 do _d=_d+1 end\n';
-                    out = out.replace(/\n/g, '\n' + dead + '\n');
-                }
-
-                // 6. WeAreDevs Pro: banyak noise + math.random
-                if (level === 'wearedevs') {
-                    let noise = '\n-- [[wearedevs]]\n';
-                    for (let i = 0; i < 15; i++) {
-                        const r = Math.floor(Math.random() * 9999);
-                        noise += `local _w${i} = ${r + i*3} -- ${String.fromCharCode(65 + i % 26)}\n`;
-                    }
-                    noise += 'local _rnd = math.random(1,9999)\n';
-                    out = noise + out + '\n-- end wearedevs\n';
-                }
-
-                // 7. extra math.random injection
-                if (extra === 'mathrandom' || extra === 'all') {
-                    out = out.replace(/\b(\d{2,})\b/g, function(m, num) {
-                        if (Math.random() > 0.5 && parseInt(num) > 9) {
-                            return 'math.random(' + num + ',' + (parseInt(num) + 7) + ')';
-                        }
-                        return num;
-                    });
-                }
-
-                // 8. tambah header & footer biar jelas
-                const header = `--[[ OBF · level: ${level} · extra: ${extra} ]]\n`;
-                return header + out + '\n--[[ end obf ]]--';
-            }
-
-            function setOutput(text) {
-                lastOutput = text;
-                outputBody.textContent = text;
-                charCount.textContent = text.length + ' chars';
-            }
-
-            function handleObfuscate() {
-                const code = inputScript.value;
-                if (!code.trim()) {
-                    setOutput('⚠️ Script kosong. Masukkan kode Lua.');
-                    return;
-                }
-                try {
-                    const result = obfuscateLua(code, obfLevel.value, extraOpt.value);
-                    setOutput(result);
-                } catch (e) {
-                    setOutput('❌ ERROR: ' + e.message);
-                }
-            }
-
-            function handleCopy() {
-                if (!lastOutput || lastOutput.includes('placeholder') || lastOutput.trim() === '') {
-                    copyFeedback.textContent = '⚠️ Tidak ada output';
-                    copyFeedback.classList.add('show');
-                    setTimeout(() => copyFeedback.classList.remove('show'), 1400);
-                    return;
-                }
-                navigator.clipboard.writeText(lastOutput).then(() => {
-                    copyFeedback.textContent = '✅ Tersalin!';
-                    copyFeedback.classList.add('show');
-                    setTimeout(() => copyFeedback.classList.remove('show'), 1600);
-                }).catch(() => {
-                    const ta = document.createElement('textarea');
-                    ta.value = lastOutput;
-                    document.body.appendChild(ta);
-                    ta.select();
-                    document.execCommand('copy');
-                    ta.remove();
-                    copyFeedback.textContent = '✅ Disalin (fallback)';
-                    copyFeedback.classList.add('show');
-                    setTimeout(() => copyFeedback.classList.remove('show'), 1400);
-                });
-            }
-
-            function handleClear() {
-                inputScript.value = '';
-                setOutput('⌛ Hasil obfuscation akan tampil di sini...');
-                charCount.textContent = '0 chars';
-            }
-
-            // event binding
-            obfBtn.addEventListener('click', handleObfuscate);
-            copyBtn.addEventListener('click', handleCopy);
-            clearBtn.addEventListener('click', handleClear);
-
-            // Ctrl+Enter
-            inputScript.addEventListener('keydown', (e) => {
-                if (e.ctrlKey && e.key === 'Enter') {
-                    e.preventDefault();
-                    handleObfuscate();
-                }
-            });
-
-            // auto run on load
-            window.addEventListener('load', () => {
-                handleObfuscate();
-            });
-        })();
-    </script>
+openDB().then(()=>{load();adminUI()});
+</script>
 </body>
-    </html>
+</html>
