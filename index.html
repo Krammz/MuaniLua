@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
+<html lang="id"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>KrammzLua Share</title>
-<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bangers&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet">
 <style>
 :root{--y:#ffe642;--g:#5fdc3e;--k:#111;--w:#fff;--cr:#fff5a8}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -68,29 +67,32 @@ footer{text-align:center;font-weight:700;padding:18px;border-top:4px solid var(-
 </head>
 <body>
 
-<div id="loader">
-  <div class="burst"><span class="bang" id="num">1</span></div>
-  <div class="bar"><i id="fill"></i></div>
+<div id="loader" class="out" style="display: none;">
+  <div class="burst"><span class="bang" id="num">5</span></div>
+  <div class="bar"><i id="fill" style="width: 100%;"></i></div>
   <div class="lt bang">LOADING...</div>
 </div>
 
 <header>
   <div class="logo"><b class="bang">K</b>KRAMMZLUA <span class="tag">SHARE</span></div>
   <div class="hdr-r">
-    <span id="adm" style="display:none">ADMIN</span>
-    <button class="btn g" id="upBtn" style="display:none">+ Upload</button>
-    <button class="btn g" id="saveBtn" style="display:none">💾 Simpan HTML</button>
-    <button class="btn" id="loginBtn">Masuk</button>
+    <span id="adm" style="">ADMIN</span>
+    <button class="btn g" id="upBtn" style="">+ Upload</button>
+    <button class="btn g" id="saveBtn" style="">💾 Simpan HTML</button>
+    <button class="btn" id="loginBtn">Keluar</button>
   </div>
 </header>
 
 <main>
   <h1 class="bang">Download file komunitas.</h1>
-  <div class="sub"><span id="total">0</span> file tersedia</div>
+  <div class="sub"><span id="total">1</span> file tersedia</div>
   <div class="search">🔍<input id="q" placeholder="Cari nama file"></div>
-  <div class="chips" id="chips"></div>
-  <div class="count" id="cnt">0 file</div>
-  <div id="list"></div>
+  <div class="chips" id="chips"><button class="chip on">Semua</button><button class="chip ">MonetLoader</button><button class="chip ">GTA SA-MP</button><button class="chip ">CLEO</button><button class="chip ">Tools</button><button class="chip ">Lainnya</button></div>
+  <div class="count" id="cnt">1 file</div>
+  <div id="list"><div class="card"><div class="row"><div class="ext"><span>zip</span></div>
+  <div class="info"><h3>HUJAN SAKURA KRAMAS.zip</h3><p>/sakura sakura</p>
+  <div class="meta"><span>1.0 KB</span><span>11 Okt 2026</span></div></div></div>
+  <div class="acts"><a href="data:application/zip;base64,UEsDBAoAAAgAACFnM10AAAAAAAAAAAAAAAAUAAAASFVKQU4gU0FLVVJBIEtSQU1BUy9QSwMEFAAACAgAIWczXQAAAAACAAAAAAAAACEAAABIVUpBTiBTQUtVUkEgS1JBTUFTL2tyYW1temx1YS50eHQDAFBLAwQUAAAICAAPZzNd0WTsh24CAACSBQAAIwAAAEhVSkFOIFNBS1VSQSBLUkFNQVMvc2FrdXJhV0FURVIubHVhhVRNb9swDL37VxDaxe4SNxnWQze0QJCtly2XdsCABT2oMZ0IsSVNkhsXRf77SH+09jKsAmJH1OMT+Uja4e9KOQRRqIe0NEYXRmboRFSYjSxAabXJt3AFrse1FhF1gPa0NabsGz97DGR6Lk2G9BYmz8XxOAGhTYE2JahIIpWDNqHxDjvUHc2/XT/39F4+Ykx/xlyAOuuj8fUE/BO5bjHcbRyivkVviiooo+OkA+VGhyYjTYkuHcqAN2SKxcIpWYgJzC8m8LFHWwyy8BzVMYrySm+YC0qpmBBodakofydL+53Vy+IEjBtY2c2/HDUJOwyV003sTHLYqQIHHotHqQr5UCDhMwMHqUI8n826ZNnDE+oWt8oHSmInw9KUpdRZLLzcV05SGn2wsW0D7YK1cEXSdiiOszWw1k1oL1hejewY0q4idnT437KMkBzsIss4zhV6L7cYi/W328Vq9eseBKQp2E+VtejiZAKz+obW5eVy+UqChcc3Gc+b62Hd5nZOGd2Lno60eyXrRKd3Eg3kD65CUvsF16g+G4k31mOg44lyBC5l2KWOimLKeE5tReW7hou2/iMsr8DVJuk8uhC3TTeB55pEH9LMqL9r0oh7fDrn3V+AD9y6x7H6fb79Gm1y6gBFJO/6OynS6XwoQ7+6eeA2aKBrdX+CsSlHxs/39PSnadq0bgA1AZq4PQ2S8emG2PfU7GfslsB0Cl9z3EMmKw3U4UFVFqTeKn3CeGJoB5tH+ouThx9Yh5hHntrzjNqBrubH06jP+L6f0mkJVuk9tEV9+yaeJkr1mr85TVXbIjosDY1EL6hKTiow3A+6MeLfH1BLAQIUAAoAAAgAACFnM10AAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAAAABIVUpBTiBTQUtVUkEgS1JBTUFTL1BLAQIUABQAAAgIACFnM10AAAAAAgAAAAAAAAAhAAAAAAAAAAAAAAAAADIAAABIVUpBTiBTQUtVUkEgS1JBTUFTL2tyYW1temx1YS50eHRQSwECFAAUAAAICAAPZzNd0WTsh24CAACSBQAAIwAAAAAAAAAAAAAAAABzAAAASFVKQU4gU0FLVVJBIEtSQU1BUy9zYWt1cmFXQVRFUi5sdWFQSwUGAAAAAAMAAwDiAAAAIgMAAAAA" download="HUJAN SAKURA KRAMAS.zip">Download</a><button data-x="mv331n9v3olr">Hapus</button></div></div></div>
 
   <div class="wa">
     <h2 class="bang">File baru masuk lewat channel WhatsApp.</h2>
@@ -120,10 +122,10 @@ footer{text-align:center;font-weight:700;padding:18px;border-top:4px solid var(-
   <div class="btns"><button class="btn" id="cancelU">Batal</button><button class="btn g" id="doUp">Tambah</button></div>
 </div></div>
 
-<div id="toast"></div>
+<div id="toast" class="">Ditambahkan. Klik 💾 Simpan HTML untuk menyimpan.</div>
 
 <!-- DATA FILE: otomatis terisi saat klik "Simpan HTML" -->
-<script id="db" type="application/json">[]</script>
+<script id="db" type="application/json">[{"id":"mv331n9v3olr","name":"HUJAN SAKURA KRAMAS.zip","size":1050,"date":1791678376723,"desc":"/sakura sakura","cat":"MonetLoader","data":"data:application/zip;base64,UEsDBAoAAAgAACFnM10AAAAAAAAAAAAAAAAUAAAASFVKQU4gU0FLVVJBIEtSQU1BUy9QSwMEFAAACAgAIWczXQAAAAACAAAAAAAAACEAAABIVUpBTiBTQUtVUkEgS1JBTUFTL2tyYW1temx1YS50eHQDAFBLAwQUAAAICAAPZzNd0WTsh24CAACSBQAAIwAAAEhVSkFOIFNBS1VSQSBLUkFNQVMvc2FrdXJhV0FURVIubHVhhVRNb9swDL37VxDaxe4SNxnWQze0QJCtly2XdsCABT2oMZ0IsSVNkhsXRf77SH+09jKsAmJH1OMT+Uja4e9KOQRRqIe0NEYXRmboRFSYjSxAabXJt3AFrse1FhF1gPa0NabsGz97DGR6Lk2G9BYmz8XxOAGhTYE2JahIIpWDNqHxDjvUHc2/XT/39F4+Ykx/xlyAOuuj8fUE/BO5bjHcbRyivkVviiooo+OkA+VGhyYjTYkuHcqAN2SKxcIpWYgJzC8m8LFHWwyy8BzVMYrySm+YC0qpmBBodakofydL+53Vy+IEjBtY2c2/HDUJOwyV003sTHLYqQIHHotHqQr5UCDhMwMHqUI8n826ZNnDE+oWt8oHSmInw9KUpdRZLLzcV05SGn2wsW0D7YK1cEXSdiiOszWw1k1oL1hejewY0q4idnT437KMkBzsIss4zhV6L7cYi/W328Vq9eseBKQp2E+VtejiZAKz+obW5eVy+UqChcc3Gc+b62Hd5nZOGd2Lno60eyXrRKd3Eg3kD65CUvsF16g+G4k31mOg44lyBC5l2KWOimLKeE5tReW7hou2/iMsr8DVJuk8uhC3TTeB55pEH9LMqL9r0oh7fDrn3V+AD9y6x7H6fb79Gm1y6gBFJO/6OynS6XwoQ7+6eeA2aKBrdX+CsSlHxs/39PSnadq0bgA1AZq4PQ2S8emG2PfU7GfslsB0Cl9z3EMmKw3U4UFVFqTeKn3CeGJoB5tH+ouThx9Yh5hHntrzjNqBrubH06jP+L6f0mkJVuk9tEV9+yaeJkr1mr85TVXbIjosDY1EL6hKTiow3A+6MeLfH1BLAQIUAAoAAAgAACFnM10AAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAAAABIVUpBTiBTQUtVUkEgS1JBTUFTL1BLAQIUABQAAAgIACFnM10AAAAAAgAAAAAAAAAhAAAAAAAAAAAAAAAAADIAAABIVUpBTiBTQUtVUkEgS1JBTUFTL2tyYW1temx1YS50eHRQSwECFAAUAAAICAAPZzNd0WTsh24CAACSBQAAIwAAAAAAAAAAAAAAAABzAAAASFVKQU4gU0FLVVJBIEtSQU1BUy9zYWt1cmFXQVRFUi5sdWFQSwUGAAAAAAMAAwDiAAAAIgMAAAAA"}]</script>
 
 <script>
 const ADMIN={u:'krammz',p:'apa123'};
@@ -220,5 +222,6 @@ window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.return
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('on')}));
 render();adminUI();
 </script>
-</body>
-</html>
+
+
+</body></html>
