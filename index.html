@@ -224,15 +224,16 @@ $('doUp').onclick=async()=>{
  const btn=$('doUp');btn.disabled=true;btn.textContent='Uploading...';
  try{
   const data=await b64(f);
-  const r=await fetch(API,{method:'POST',headers:H,body:JSON.stringify({name:f.name,data})});
+  const r=await fetch(API,{method:'POST',headers:H,body:JSON.stringify({name:f.name,type:f.type||'application/octet-stream',data})});
+  if(!r.ok){const t=await r.text();throw new Error('HTTP '+r.status+' '+t.slice(0,80))}
   const id=(r.headers.get('Location')||'').split('/').pop();
-  if(!id)throw new Error('upload gagal');
+  if(!id)throw new Error('Location tidak terbaca');
   const cur=await getIndex();
   cur.push({id,name:f.name,size:f.size,date:Date.now(),desc:$('desc').value.trim(),cat:$('cat').value});
   await saveIndex(cur);
   $('file').value='';$('desc').value='';$('dropT').textContent='📁 Pilih file';
   $('mUp').classList.remove('on');await load();toast('Upload sukses 💥');
- }catch(err){toast('Upload gagal, coba lagi')}
+ }catch(err){console.error(err);toast('Gagal: '+err.message.slice(0,60))}
  btn.disabled=false;btn.textContent='Upload';
 };
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('on')}));
