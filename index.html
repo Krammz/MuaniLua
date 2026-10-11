@@ -11,7 +11,6 @@
 body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--k);background:var(--y);
 background-image:radial-gradient(#0002 2px,transparent 2px);background-size:26px 26px;min-height:100vh}
 .bang{font-family:'Bangers','Impact',sans-serif;letter-spacing:2px}
-/* loader */
 #loader{position:fixed;inset:0;z-index:99;background:var(--y);background-image:radial-gradient(#0003 3px,transparent 3px);background-size:22px 22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:.4s}
 #loader.out{opacity:0;transform:scale(1.4);pointer-events:none}
 .burst{width:260px;height:260px;display:grid;place-items:center;background:var(--g);border:6px solid var(--k);
@@ -21,14 +20,13 @@ clip-path:polygon(50% 0,60% 18%,80% 6%,78% 28%,100% 30%,86% 48%,100% 66%,78% 70%
 .lt{font-size:34px;text-shadow:3px 3px 0 var(--w)}
 .bar{width:260px;height:26px;border:4px solid var(--k);background:var(--w);box-shadow:5px 5px 0 var(--k);border-radius:8px;overflow:hidden}
 .bar i{display:block;height:100%;width:0;background:var(--g);transition:width .9s linear}
-/* header */
 header{background:var(--w);border-bottom:4px solid var(--k);display:flex;align-items:center;justify-content:space-between;padding:12px 16px;position:sticky;top:0;z-index:20}
 .logo{display:flex;align-items:center;gap:8px;font-weight:700}
 .logo b{width:44px;height:44px;display:grid;place-items:center;background:var(--g);border:3px solid var(--k);border-radius:10px;font-size:26px;box-shadow:3px 3px 0 var(--k)}
 .tag{background:var(--k);color:var(--y);font-size:11px;padding:3px 8px;border-radius:6px;transform:rotate(-4deg)}
 .btn{font-family:inherit;font-weight:700;font-size:16px;border:3px solid var(--k);border-radius:12px;padding:10px 18px;cursor:pointer;background:var(--k);color:var(--w);box-shadow:4px 4px 0 #0007;transition:.1s}
 .btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 #0007}
-.btn.g{background:var(--g);color:var(--k)}.btn.r{background:#ff4d4d;color:var(--k)}
+.btn.g{background:var(--g);color:var(--k)}
 .hdr-r{display:flex;gap:10px;align-items:center;font-weight:700}
 main{max-width:760px;margin:0 auto;padding:22px 16px 40px}
 h1{font-size:clamp(40px,10vw,64px);line-height:1;text-shadow:4px 4px 0 var(--w)}
@@ -49,9 +47,8 @@ h1{font-size:clamp(40px,10vw,64px);line-height:1;text-shadow:4px 4px 0 var(--w)}
 .info p{color:#555;margin:4px 0 10px;word-break:break-word}
 .meta{display:flex;justify-content:space-between;color:#444;font-weight:700;font-size:15px}
 .acts{display:flex;border-top:4px solid var(--k)}
-.acts a,.acts button{flex:1;text-align:center;text-decoration:none;font:inherit;font-weight:700;font-size:18px;padding:14px;border:0;cursor:pointer;background:var(--g);color:var(--k)}
-.acts button{background:#ff4d4d;flex:0 0 120px;border-left:4px solid var(--k)}
-.acts a:active,.acts button:active{filter:brightness(.85)}
+.acts a{flex:1;text-align:center;text-decoration:none;font:inherit;font-weight:700;font-size:18px;padding:14px;background:var(--g);color:var(--k)}
+.acts a:active{filter:brightness(.85)}
 .empty{text-align:center;padding:30px;font-size:30px}
 .wa{background:var(--g);border:4px solid var(--k);border-radius:14px;padding:26px 18px;box-shadow:7px 7px 0 var(--k);margin-top:30px}
 .wa h2{font-size:clamp(34px,8vw,48px);line-height:1;margin-bottom:16px}
@@ -59,15 +56,15 @@ h1{font-size:clamp(40px,10vw,64px);line-height:1;text-shadow:4px 4px 0 var(--w)}
 .exts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:26px 0 8px}
 .exts span{background:var(--y);border:3px solid var(--k);border-radius:10px;padding:6px 14px;font-weight:700;box-shadow:3px 3px 0 var(--k)}
 footer{text-align:center;font-weight:700;padding:18px;border-top:4px solid var(--k);background:var(--y)}
-/* modal */
 .modal{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;z-index:60;padding:16px}
 .modal.on{display:flex}
 .box{background:var(--w);border:5px solid var(--k);border-radius:18px;box-shadow:9px 9px 0 var(--k);padding:22px;width:100%;max-width:420px;animation:pop .3s}
 .box h2{font-size:38px;margin-bottom:12px}
 .box input,.box select,.box textarea{width:100%;font:inherit;border:3px solid var(--k);border-radius:10px;padding:11px;margin-bottom:12px;background:var(--cr)}
-.drop{border:4px dashed var(--k);border-radius:12px;padding:20px;text-align:center;font-weight:700;margin-bottom:12px;background:var(--cr);cursor:pointer}
+.box textarea{font-family:monospace;font-size:12px;height:90px;resize:none}
+.drop{display:block;border:4px dashed var(--k);border-radius:12px;padding:20px;text-align:center;font-weight:700;margin-bottom:12px;background:var(--cr);cursor:pointer}
 .box .btns{display:flex;gap:10px}.box .btns .btn{flex:1}
-#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--k);color:var(--y);padding:12px 22px;border-radius:12px;font-weight:700;z-index:90;transition:.3s;border:3px solid var(--y)}
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--k);color:var(--y);padding:12px 22px;border-radius:12px;font-weight:700;z-index:90;transition:.3s;border:3px solid var(--y);max-width:90%;text-align:center}
 #toast.on{transform:translateX(-50%)}
 </style>
 </head>
@@ -104,7 +101,6 @@ footer{text-align:center;font-weight:700;padding:18px;border-top:4px solid var(-
 </main>
 <footer>© 2026 KrammzLua Share</footer>
 
-<!-- login -->
 <div class="modal" id="mLogin"><div class="box">
   <h2 class="bang">Login Admin</h2>
   <input id="u" placeholder="Username" autocomplete="off">
@@ -112,71 +108,53 @@ footer{text-align:center;font-weight:700;padding:18px;border-top:4px solid var(-
   <div class="btns"><button class="btn" id="cancelL">Batal</button><button class="btn g" id="doLogin">Masuk</button></div>
 </div></div>
 
-<!-- upload -->
 <div class="modal" id="mUp"><div class="box">
-  <h2 class="bang">Upload File</h2>
-  <label class="drop" for="file" id="dropT">📁 Pilih file (.lua .cleo .asi .cs .csi .lib .zip ...)</label>
+  <h2 class="bang">Tambah File</h2>
+  <label class="drop" for="file" id="dropT">📁 Pilih file (maks 2 MB)</label>
   <input type="file" id="file" style="display:none">
   <input id="desc" placeholder="Deskripsi (contoh: /bmbot fitur lengkap)">
   <select id="cat">
     <option>MonetLoader</option><option>GTA SA-MP</option><option>CLEO</option><option>Tools</option><option>Lainnya</option>
   </select>
-  <div class="btns"><button class="btn" id="cancelU">Batal</button><button class="btn g" id="doUp">Upload</button></div>
+  <textarea id="out" readonly placeholder="Baris siap tempel muncul di sini"></textarea>
+  <div class="btns"><button class="btn" id="cancelU">Tutup</button><button class="btn g" id="doUp">Buat & Salin</button></div>
 </div></div>
 
 <div id="toast"></div>
 
 <script>
 const ADMIN={u:'krammz',p:'apa123'};
-const API='https://jsonblob.com/api/jsonBlob';
-/* Setelah upload pertama, ID muncul. Tempel ID itu di sini lalu deploy ulang supaya publik bisa lihat */
-const INDEX_ID='';
-const CATS=['Semua','MonetLoader','GTA SA-MP','CLEO','Tools','Lainnya'];
-const MAX=3*1024*1024;
-let isAdmin=sessionStorage.getItem('adm')==='1',cat='Semua',items=[];
-let indexId=INDEX_ID||localStorage.getItem('kz_idx')||'';
-const $=id=>document.getElementById(id);
-const toast=t=>{const e=$('toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2600)};
 
-/* loader 1..5 detik */
+/* ===== DAFTAR FILE =====
+   Tempel baris hasil "Buat & Salin" di sini, lalu deploy ulang.
+   Baris yang punya data:"..." tersimpan di HTML (tanpa folder files/).
+   Baris tanpa data akan mengambil dari folder files/namafile */
+const FILES=[
+ {name:"contoh.lua",size:2048,date:1760000000000,desc:"Contoh file (hapus baris ini)",cat:"MonetLoader"},
+];
+/* ======================= */
+
+const CATS=['Semua','MonetLoader','GTA SA-MP','CLEO','Tools','Lainnya'];
+const MAX=2*1024*1024;
+let isAdmin=sessionStorage.getItem('adm')==='1',cat='Semua';
+const items=[...FILES].sort((a,b)=>b.date-a.date);
+const $=id=>document.getElementById(id);
+const toast=t=>{const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2800)};
+
 (function(){let n=1;const f=$('fill'),num=$('num');
  setTimeout(()=>f.style.width='20%',50);
  const t=setInterval(()=>{n++;if(n>5){clearInterval(t);$('loader').classList.add('out');setTimeout(()=>$('loader').remove(),500);return}
   num.textContent=n;f.style.width=(n*20)+'%'},1000);})();
 
-const H={'Content-Type':'application/json',Accept:'application/json'};
-async function getIndex(){
- if(!indexId)return [];
- try{const r=await fetch(API+'/'+indexId,{headers:H,cache:'no-store'});
-  if(r.ok){const j=await r.json();return j.files||[]}}catch(e){}
- return [];
-}
-async function saveIndex(files){
- const body=JSON.stringify({files});
- if(!indexId){
-  const r=await fetch(API,{method:'POST',headers:H,body});
-  const loc=r.headers.get('Location')||'';
-  indexId=loc.split('/').pop();
-  if(!indexId)throw new Error('gagal buat index');
-  localStorage.setItem('kz_idx',indexId);
-  prompt('Salin ID ini, tempel ke INDEX_ID di index.html lalu deploy ulang agar publik bisa lihat:',indexId);
- }else{
-  const r=await fetch(API+'/'+indexId,{method:'PUT',headers:H,body});
-  if(!r.ok)throw new Error('gagal simpan');
- }
-}
 const fmt=b=>b>1048576?(b/1048576).toFixed(1)+' MB':(b/1024).toFixed(1)+' KB';
 const dt=d=>new Date(d).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'});
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const b64=f=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)});
 
-async function load(){
- items=await getIndex();items.sort((a,b)=>b.date-a.date);render();
-}
 function render(){
  const q=$('q').value.toLowerCase();
  const list=items.filter(i=>(cat==='Semua'||i.cat===cat)&&i.name.toLowerCase().includes(q));
- $('total').textContent=items.length;$('cnt').textContent=list.length+' file';
+ $('total').textContent=items.length;
+ $('cnt').textContent=list.length+' file';
  $('list').innerHTML=list.length?'':'<div class="empty bang">Belum ada file 💥</div>';
  list.forEach(i=>{
   const ext=(i.name.split('.').pop()||'file');
@@ -184,60 +162,89 @@ function render(){
   c.innerHTML=`<div class="row"><div class="ext"><span>${esc(ext)}</span></div>
   <div class="info"><h3>${esc(i.name)}</h3>${i.desc?`<p>${esc(i.desc)}</p>`:'<p>&nbsp;</p>'}
   <div class="meta"><span>${fmt(i.size)}</span><span>${dt(i.date)}</span></div></div></div>
-  <div class="acts"><a href="#" data-d="${esc(i.id)}">Download</a>${isAdmin?`<button data-x="${esc(i.id)}">Hapus</button>`:''}</div>`;
+  <div class="acts"><a href="#" data-n="${esc(i.name)}">Download</a></div>`;
   $('list').appendChild(c);
  });
 }
+
+/* download: dari data tersimpan di HTML, atau dari folder files/ */
 $('list').addEventListener('click',async e=>{
- const d=e.target.closest('[data-d]'),x=e.target.closest('[data-x]');
- if(d){e.preventDefault();const i=items.find(v=>v.id===d.dataset.d);
-  try{toast('Menyiapkan...');
-   const r=await fetch(API+'/'+i.id,{headers:H});const j=await r.json();
-   const blob=await (await fetch(j.data)).blob();
-   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=i.name;
-   document.body.appendChild(a);a.click();a.remove();toast('Mengunduh '+i.name);
-  }catch(err){toast('Gagal download')}}
- if(x){if(!confirm('Hapus file ini?'))return;
-  try{fetch(API+'/'+x.dataset.x,{method:'DELETE'}).catch(()=>{});
-   items=items.filter(v=>v.id!==x.dataset.x);await saveIndex(items);render();toast('Terhapus')}
-  catch(err){toast('Gagal hapus');load()}}
+ const a=e.target.closest('[data-n]');if(!a)return;
+ e.preventDefault();
+ const i=items.find(v=>v.name===a.dataset.n);if(!i)return;
+ if(!i.data){location.href='files/'+encodeURIComponent(i.name);return}
+ try{
+  const b=await (await fetch(i.data)).blob();
+  const l=document.createElement('a');
+  l.href=URL.createObjectURL(b);l.download=i.name;
+  document.body.appendChild(l);l.click();l.remove();
+  setTimeout(()=>URL.revokeObjectURL(l.href),10000);
+  toast('Mengunduh '+i.name);
+ }catch(err){toast('Gagal download')}
 });
+
 $('chips').innerHTML=CATS.map(c=>`<button class="chip ${c==='Semua'?'on':''}">${c}</button>`).join('');
-$('chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;
- cat=b.textContent;[...$('chips').children].forEach(x=>x.classList.toggle('on',x===b));render()});
+$('chips').addEventListener('click',e=>{
+ const b=e.target.closest('.chip');if(!b)return;
+ cat=b.textContent;
+ [...$('chips').children].forEach(x=>x.classList.toggle('on',x===b));
+ render();
+});
 $('q').addEventListener('input',render);
 
-/* admin ui */
-function adminUI(){$('upBtn').style.display=isAdmin?'':'none';$('adm').style.display=isAdmin?'':'none';
- $('loginBtn').textContent=isAdmin?'Keluar':'Masuk';render()}
-$('loginBtn').onclick=()=>{if(isAdmin){isAdmin=false;sessionStorage.removeItem('adm');adminUI();toast('Logout');return}
- $('mLogin').classList.add('on')};
+function adminUI(){
+ $('upBtn').style.display=isAdmin?'':'none';
+ $('adm').style.display=isAdmin?'':'none';
+ $('loginBtn').textContent=isAdmin?'Keluar':'Masuk';
+}
+$('loginBtn').onclick=()=>{
+ if(isAdmin){isAdmin=false;sessionStorage.removeItem('adm');adminUI();toast('Logout');return}
+ $('mLogin').classList.add('on');
+};
 $('cancelL').onclick=()=>$('mLogin').classList.remove('on');
-$('doLogin').onclick=()=>{if($('u').value===ADMIN.u&&$('p').value===ADMIN.p){isAdmin=true;sessionStorage.setItem('adm','1');
- $('mLogin').classList.remove('on');$('u').value=$('p').value='';adminUI();toast('Login berhasil 💥')}else toast('Akun salah!')};
+$('doLogin').onclick=()=>{
+ if($('u').value===ADMIN.u&&$('p').value===ADMIN.p){
+  isAdmin=true;sessionStorage.setItem('adm','1');
+  $('mLogin').classList.remove('on');$('u').value=$('p').value='';
+  adminUI();toast('Login berhasil 💥');
+ }else toast('Akun salah!');
+};
 $('upBtn').onclick=()=>$('mUp').classList.add('on');
 $('cancelU').onclick=()=>$('mUp').classList.remove('on');
-$('file').onchange=e=>{const f=e.target.files[0];$('dropT').textContent=f?'✅ '+f.name+' ('+fmt(f.size)+')':'📁 Pilih file'};
-$('doUp').onclick=async()=>{
- const f=$('file').files[0];if(!f)return toast('Pilih file dulu');
- if(f.size>MAX)return toast('Maksimal 3 MB');
- const btn=$('doUp');btn.disabled=true;btn.textContent='Uploading...';
- try{
-  const data=await b64(f);
-  const r=await fetch(API,{method:'POST',headers:H,body:JSON.stringify({name:f.name,type:f.type||'application/octet-stream',data})});
-  if(!r.ok){const t=await r.text();throw new Error('HTTP '+r.status+' '+t.slice(0,80))}
-  const id=(r.headers.get('Location')||'').split('/').pop();
-  if(!id)throw new Error('Location tidak terbaca');
-  const cur=await getIndex();
-  cur.push({id,name:f.name,size:f.size,date:Date.now(),desc:$('desc').value.trim(),cat:$('cat').value});
-  await saveIndex(cur);
-  $('file').value='';$('desc').value='';$('dropT').textContent='📁 Pilih file';
-  $('mUp').classList.remove('on');await load();toast('Upload sukses 💥');
- }catch(err){console.error(err);toast('Gagal: '+err.message.slice(0,60))}
- btn.disabled=false;btn.textContent='Upload';
+$('file').onchange=e=>{
+ const f=e.target.files[0];
+ $('dropT').textContent=f?'✅ '+f.name+' ('+fmt(f.size)+')':'📁 Pilih file (maks 2 MB)';
+ $('out').value='';
 };
+
+/* pembuat baris FILES (isi file ikut tersimpan sebagai base64) */
+$('doUp').onclick=()=>{
+ const f=$('file').files[0];
+ if(!f)return toast('Pilih file dulu');
+ if(f.size>MAX)return toast('Maksimal 2 MB');
+ const r=new FileReader();
+ r.onerror=()=>toast('Gagal baca file');
+ r.onload=async()=>{
+  const line='{name:'+JSON.stringify(f.name)+',size:'+f.size+',date:'+Date.now()+
+   ',desc:'+JSON.stringify($('desc').value.trim())+',cat:'+JSON.stringify($('cat').value)+
+   ',data:'+JSON.stringify(r.result)+'},';
+  const o=$('out');
+  try{
+   await navigator.clipboard.writeText(line);
+   o.value=line.slice(0,200)+'...';
+   toast('Tersalin! Tempel ke FILES 💥');
+  }catch(e){
+   o.readOnly=false;o.value=line;o.focus();o.select();
+   let ok=false;try{ok=document.execCommand('copy')}catch(x){}
+   o.readOnly=true;
+   toast(ok?'Tersalin! Tempel ke FILES 💥':'Salin manual dari kotak');
+  }
+ };
+ r.readAsDataURL(f);
+};
+
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('on')}));
-load();adminUI();
+render();adminUI();
 </script>
 </body>
 </html>
