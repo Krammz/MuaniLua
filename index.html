@@ -1,227 +1,126 @@
 <!DOCTYPE html>
-<html lang="id"><head>
+<html lang="id">
+<head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KrammzLua Share</title>
-<link href="https://fonts.googleapis.com/css2?family=Bangers&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rizkyseansa</title>
 <style>
-:root{--y:#ffe642;--g:#5fdc3e;--k:#111;--w:#fff;--cr:#fff5a8}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--k);background:var(--y);
-background-image:radial-gradient(#0002 2px,transparent 2px);background-size:26px 26px;min-height:100vh}
-.bang{font-family:'Bangers','Impact',sans-serif;letter-spacing:2px}
-#loader{position:fixed;inset:0;z-index:99;background:var(--y);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:.4s}
-#loader.out{opacity:0;pointer-events:none}
-.burst{width:260px;height:260px;display:grid;place-items:center;background:var(--g);border:6px solid var(--k);
-clip-path:polygon(50% 0,60% 18%,80% 6%,78% 28%,100% 30%,86% 48%,100% 66%,78% 70%,82% 92%,60% 82%,50% 100%,40% 82%,18% 92%,22% 70%,0 66%,14% 48%,0 30%,22% 28%,20% 6%,40% 18%);animation:pulse .5s infinite alternate}
-.burst span{font-size:110px;color:var(--w);text-shadow:5px 5px 0 var(--k),-3px -3px 0 var(--k),3px -3px 0 var(--k),-3px 3px 0 var(--k);transform:rotate(-6deg)}
-@keyframes pulse{to{transform:scale(1.08) rotate(3deg)}}
-.lt{font-size:34px}
-.bar{width:260px;height:26px;border:4px solid var(--k);background:var(--w);box-shadow:5px 5px 0 var(--k);border-radius:8px;overflow:hidden}
-.bar i{display:block;height:100%;width:0;background:var(--g);transition:width .9s linear}
-header{background:var(--w);border-bottom:4px solid var(--k);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:12px 16px;position:sticky;top:0;z-index:20}
-.logo{display:flex;align-items:center;gap:8px;font-weight:700}
-.logo b{width:44px;height:44px;display:grid;place-items:center;background:var(--g);border:3px solid var(--k);border-radius:10px;font-size:26px;box-shadow:3px 3px 0 var(--k)}
-.tag{background:var(--k);color:var(--y);font-size:11px;padding:3px 8px;border-radius:6px;transform:rotate(-4deg)}
-.btn{font-family:inherit;font-weight:700;font-size:16px;border:3px solid var(--k);border-radius:12px;padding:10px 18px;cursor:pointer;background:var(--k);color:var(--w);box-shadow:4px 4px 0 #0007}
-.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 #0007}
-.btn.g{background:var(--g);color:var(--k)}
-.hdr-r{display:flex;gap:10px;align-items:center;font-weight:700;flex-wrap:wrap}
-main{max-width:760px;margin:0 auto;padding:22px 16px 40px}
-h1{font-size:clamp(40px,10vw,64px);line-height:1;text-shadow:4px 4px 0 var(--w)}
-.sub{margin:6px 0 18px;font-weight:700}
-.search{display:flex;gap:10px;align-items:center;background:var(--w);border:4px solid var(--k);border-radius:14px;padding:12px 16px;box-shadow:6px 6px 0 var(--k);margin-bottom:18px}
-.search input{border:0;outline:0;flex:1;font:inherit;font-size:18px;background:none}
-.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
-.chip{font:inherit;font-weight:700;border:3px solid var(--k);background:var(--w);border-radius:30px;padding:9px 18px;cursor:pointer}
-.chip.on{background:var(--k);color:var(--w)}
-.count{display:inline-block;border:3px solid var(--k);background:var(--w);border-radius:30px;padding:8px 18px;font-weight:700;margin-bottom:16px}
-.card{background:var(--w);border:4px solid var(--k);border-radius:14px;box-shadow:7px 7px 0 var(--k);margin-bottom:22px;overflow:hidden}
-.row{display:flex}
-.ext{background:var(--cr);border-right:4px solid var(--k);padding:14px;display:grid;place-items:center;min-width:92px}
-.ext span{background:var(--g);border:3px solid var(--k);border-radius:10px;padding:12px 8px;font-weight:700;font-size:14px;box-shadow:3px 3px 0 var(--k);text-transform:uppercase}
-.info{padding:14px 16px;flex:1;min-width:0}
-.info h3{font-size:22px;word-break:break-all}
-.info p{color:#555;margin:4px 0 10px;word-break:break-word}
-.meta{display:flex;justify-content:space-between;color:#444;font-weight:700;font-size:15px;gap:8px}
-.acts{display:flex;border-top:4px solid var(--k)}
-.acts a,.acts button{flex:1;text-align:center;text-decoration:none;font:inherit;font-weight:700;font-size:18px;padding:14px;border:0;cursor:pointer;background:var(--g);color:var(--k)}
-.acts button{background:#ff4d4d;flex:0 0 120px;border-left:4px solid var(--k)}
-.empty{text-align:center;padding:30px;font-size:30px}
-.wa{background:var(--g);border:4px solid var(--k);border-radius:14px;padding:26px 18px;box-shadow:7px 7px 0 var(--k);margin-top:30px}
-.wa h2{font-size:clamp(34px,8vw,48px);line-height:1;margin-bottom:16px}
-.wa a{display:block;text-align:center;text-decoration:none;background:var(--k);color:var(--w);font-weight:700;font-size:20px;padding:18px;border-radius:14px}
-.exts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:26px 0 8px}
-.exts span{background:var(--y);border:3px solid var(--k);border-radius:10px;padding:6px 14px;font-weight:700;box-shadow:3px 3px 0 var(--k)}
-footer{text-align:center;font-weight:700;padding:18px;border-top:4px solid var(--k)}
-.modal{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;z-index:60;padding:16px}
-.modal.on{display:flex}
-.box{background:var(--w);border:5px solid var(--k);border-radius:18px;box-shadow:9px 9px 0 var(--k);padding:22px;width:100%;max-width:420px}
-.box h2{font-size:38px;margin-bottom:12px}
-.box input,.box select{width:100%;font:inherit;border:3px solid var(--k);border-radius:10px;padding:11px;margin-bottom:12px;background:var(--cr)}
-.drop{display:block;border:4px dashed var(--k);border-radius:12px;padding:20px;text-align:center;font-weight:700;margin-bottom:12px;background:var(--cr);cursor:pointer}
-.box .btns{display:flex;gap:10px}.box .btns .btn{flex:1}
-#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--k);color:var(--y);padding:12px 22px;border-radius:12px;font-weight:700;z-index:90;transition:.3s;border:3px solid var(--y);max-width:90%;text-align:center}
-#toast.on{transform:translateX(-50%)}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    color: #fff;
+    background: url('https://qu.ax/Gzcj7') center / cover no-repeat fixed;
+    display: flex;
+    justify-content: center;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 480px;
+    padding: 40px 16px 30px;
+    text-align: center;
+  }
+
+  .avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin: 0 auto 14px;
+    background: linear-gradient(135deg, #7b5cff, #ff5ca8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: bold;
+    border: 3px solid #fff3;
+  }
+
+  h1 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .bio {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+
+  .socials {
+    display: flex;
+    justify-content: center;
+    gap: 26px;
+    margin-bottom: 32px;
+  }
+
+  .socials a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 28px;
+    transition: transform 0.2s;
+  }
+
+  .socials a:hover { transform: scale(1.15); }
+
+  .card {
+    display: block;
+    background: rgba(20, 20, 20, 0.9);
+    border-radius: 22px;
+    padding: 14px;
+    text-decoration: none;
+    color: #fff;
+    transition: transform 0.2s, background 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    background: rgba(35, 35, 35, 0.95);
+  }
+
+  .card img {
+    width: 100%;
+    border-radius: 14px;
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .card-title {
+    font-size: 18px;
+    font-weight: 500;
+    padding: 4px 0;
+  }
 </style>
 </head>
 <body>
+  <div class="container">
+    <div class="avatar">R</div>
+    <h1>Rizkyseansa</h1>
+    <p class="bio">Kalau kau order bisa PM aja ya ♿🎉</p>
 
-<div id="loader" class="out" style="display: none;">
-  <div class="burst"><span class="bang" id="num">5</span></div>
-  <div class="bar"><i id="fill" style="width: 100%;"></i></div>
-  <div class="lt bang">LOADING...</div>
-</div>
+    <div class="socials">
+      <a href="https://whatsapp.com/channel/0029Vb1emh39Gv7QRTZwp02u" target="_blank" title="WhatsApp">💬</a>
+      <a href="#" title="TikTok">🎵</a>
+      <a href="#" title="YouTube">▶️</a>
+    </div>
 
-<header>
-  <div class="logo"><b class="bang">K</b>KRAMMZLUA <span class="tag">SHARE</span></div>
-  <div class="hdr-r">
-    <span id="adm" style="">ADMIN</span>
-    <button class="btn g" id="upBtn" style="">+ Upload</button>
-    <button class="btn g" id="saveBtn" style="">💾 Simpan HTML</button>
-    <button class="btn" id="loginBtn">Keluar</button>
+    <a class="card" href="https://whatsapp.com/channel/0029Vb1emh39Gv7QRTZwp02u" target="_blank">
+      <img src="https://qu.ax/Gzcj7" alt="WhatsApp">
+      <div class="card-title">WhatsApp</div>
+    </a>
   </div>
-</header>
-
-<main>
-  <h1 class="bang">Download file komunitas.</h1>
-  <div class="sub"><span id="total">1</span> file tersedia</div>
-  <div class="search">🔍<input id="q" placeholder="Cari nama file"></div>
-  <div class="chips" id="chips"><button class="chip on">Semua</button><button class="chip ">MonetLoader</button><button class="chip ">GTA SA-MP</button><button class="chip ">CLEO</button><button class="chip ">Tools</button><button class="chip ">Lainnya</button></div>
-  <div class="count" id="cnt">1 file</div>
-  <div id="list"><div class="card"><div class="row"><div class="ext"><span>zip</span></div>
-  <div class="info"><h3>HUJAN SAKURA KRAMAS.zip</h3><p>/sakura sakura</p>
-  <div class="meta"><span>1.0 KB</span><span>11 Okt 2026</span></div></div></div>
-  <div class="acts"><a href="data:application/zip;base64,UEsDBAoAAAgAACFnM10AAAAAAAAAAAAAAAAUAAAASFVKQU4gU0FLVVJBIEtSQU1BUy9QSwMEFAAACAgAIWczXQAAAAACAAAAAAAAACEAAABIVUpBTiBTQUtVUkEgS1JBTUFTL2tyYW1temx1YS50eHQDAFBLAwQUAAAICAAPZzNd0WTsh24CAACSBQAAIwAAAEhVSkFOIFNBS1VSQSBLUkFNQVMvc2FrdXJhV0FURVIubHVhhVRNb9swDL37VxDaxe4SNxnWQze0QJCtly2XdsCABT2oMZ0IsSVNkhsXRf77SH+09jKsAmJH1OMT+Uja4e9KOQRRqIe0NEYXRmboRFSYjSxAabXJt3AFrse1FhF1gPa0NabsGz97DGR6Lk2G9BYmz8XxOAGhTYE2JahIIpWDNqHxDjvUHc2/XT/39F4+Ykx/xlyAOuuj8fUE/BO5bjHcbRyivkVviiooo+OkA+VGhyYjTYkuHcqAN2SKxcIpWYgJzC8m8LFHWwyy8BzVMYrySm+YC0qpmBBodakofydL+53Vy+IEjBtY2c2/HDUJOwyV003sTHLYqQIHHotHqQr5UCDhMwMHqUI8n826ZNnDE+oWt8oHSmInw9KUpdRZLLzcV05SGn2wsW0D7YK1cEXSdiiOszWw1k1oL1hejewY0q4idnT437KMkBzsIss4zhV6L7cYi/W328Vq9eseBKQp2E+VtejiZAKz+obW5eVy+UqChcc3Gc+b62Hd5nZOGd2Lno60eyXrRKd3Eg3kD65CUvsF16g+G4k31mOg44lyBC5l2KWOimLKeE5tReW7hou2/iMsr8DVJuk8uhC3TTeB55pEH9LMqL9r0oh7fDrn3V+AD9y6x7H6fb79Gm1y6gBFJO/6OynS6XwoQ7+6eeA2aKBrdX+CsSlHxs/39PSnadq0bgA1AZq4PQ2S8emG2PfU7GfslsB0Cl9z3EMmKw3U4UFVFqTeKn3CeGJoB5tH+ouThx9Yh5hHntrzjNqBrubH06jP+L6f0mkJVuk9tEV9+yaeJkr1mr85TVXbIjosDY1EL6hKTiow3A+6MeLfH1BLAQIUAAoAAAgAACFnM10AAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAAAABIVUpBTiBTQUtVUkEgS1JBTUFTL1BLAQIUABQAAAgIACFnM10AAAAAAgAAAAAAAAAhAAAAAAAAAAAAAAAAADIAAABIVUpBTiBTQUtVUkEgS1JBTUFTL2tyYW1temx1YS50eHRQSwECFAAUAAAICAAPZzNd0WTsh24CAACSBQAAIwAAAAAAAAAAAAAAAABzAAAASFVKQU4gU0FLVVJBIEtSQU1BUy9zYWt1cmFXQVRFUi5sdWFQSwUGAAAAAAMAAwDiAAAAIgMAAAAA" download="HUJAN SAKURA KRAMAS.zip">Download</a><button data-x="mv331n9v3olr">Hapus</button></div></div></div>
-
-  <div class="wa">
-    <h2 class="bang">File baru masuk lewat channel WhatsApp.</h2>
-    <a href="https://whatsapp.com/channel/0029Vb1emh39Gv7QRTZwp02u" target="_blank" rel="noopener">💬 Gabung channel</a>
-  </div>
-  <div class="exts"><span>.lua</span><span>.cs</span><span>.luac</span><span>.zip</span><span>.dll</span><span>.cleo</span><span>.asi</span><span>.csi</span><span>.lib</span><span>.apk</span><span>.rar</span><span>.7z</span></div>
-</main>
-<footer>© 2026 KrammzLua Share</footer>
-
-<!-- login -->
-<div class="modal" id="mLogin"><div class="box">
-  <h2 class="bang">Login Admin</h2>
-  <input id="u" placeholder="Username" autocomplete="off">
-  <input id="p" type="password" placeholder="Password">
-  <div class="btns"><button class="btn" id="cancelL">Batal</button><button class="btn g" id="doLogin">Masuk</button></div>
-</div></div>
-
-<!-- upload -->
-<div class="modal" id="mUp"><div class="box">
-  <h2 class="bang">Upload File</h2>
-  <label class="drop" for="file" id="dropT">📁 Pilih file (maks 2 MB)</label>
-  <input type="file" id="file" style="display:none">
-  <input id="desc" placeholder="Deskripsi (opsional)">
-  <select id="cat">
-    <option>MonetLoader</option><option>GTA SA-MP</option><option>CLEO</option><option>Tools</option><option>Lainnya</option>
-  </select>
-  <div class="btns"><button class="btn" id="cancelU">Batal</button><button class="btn g" id="doUp">Tambah</button></div>
-</div></div>
-
-<div id="toast" class="">Ditambahkan. Klik 💾 Simpan HTML untuk menyimpan.</div>
-
-<!-- DATA FILE: otomatis terisi saat klik "Simpan HTML" -->
-<script id="db" type="application/json">[{"id":"mv331n9v3olr","name":"HUJAN SAKURA KRAMAS.zip","size":1050,"date":1791678376723,"desc":"/sakura sakura","cat":"MonetLoader","data":"data:application/zip;base64,UEsDBAoAAAgAACFnM10AAAAAAAAAAAAAAAAUAAAASFVKQU4gU0FLVVJBIEtSQU1BUy9QSwMEFAAACAgAIWczXQAAAAACAAAAAAAAACEAAABIVUpBTiBTQUtVUkEgS1JBTUFTL2tyYW1temx1YS50eHQDAFBLAwQUAAAICAAPZzNd0WTsh24CAACSBQAAIwAAAEhVSkFOIFNBS1VSQSBLUkFNQVMvc2FrdXJhV0FURVIubHVhhVRNb9swDL37VxDaxe4SNxnWQze0QJCtly2XdsCABT2oMZ0IsSVNkhsXRf77SH+09jKsAmJH1OMT+Uja4e9KOQRRqIe0NEYXRmboRFSYjSxAabXJt3AFrse1FhF1gPa0NabsGz97DGR6Lk2G9BYmz8XxOAGhTYE2JahIIpWDNqHxDjvUHc2/XT/39F4+Ykx/xlyAOuuj8fUE/BO5bjHcbRyivkVviiooo+OkA+VGhyYjTYkuHcqAN2SKxcIpWYgJzC8m8LFHWwyy8BzVMYrySm+YC0qpmBBodakofydL+53Vy+IEjBtY2c2/HDUJOwyV003sTHLYqQIHHotHqQr5UCDhMwMHqUI8n826ZNnDE+oWt8oHSmInw9KUpdRZLLzcV05SGn2wsW0D7YK1cEXSdiiOszWw1k1oL1hejewY0q4idnT437KMkBzsIss4zhV6L7cYi/W328Vq9eseBKQp2E+VtejiZAKz+obW5eVy+UqChcc3Gc+b62Hd5nZOGd2Lno60eyXrRKd3Eg3kD65CUvsF16g+G4k31mOg44lyBC5l2KWOimLKeE5tReW7hou2/iMsr8DVJuk8uhC3TTeB55pEH9LMqL9r0oh7fDrn3V+AD9y6x7H6fb79Gm1y6gBFJO/6OynS6XwoQ7+6eeA2aKBrdX+CsSlHxs/39PSnadq0bgA1AZq4PQ2S8emG2PfU7GfslsB0Cl9z3EMmKw3U4UFVFqTeKn3CeGJoB5tH+ouThx9Yh5hHntrzjNqBrubH06jP+L6f0mkJVuk9tEV9+yaeJkr1mr85TVXbIjosDY1EL6hKTiow3A+6MeLfH1BLAQIUAAoAAAgAACFnM10AAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAAAABIVUpBTiBTQUtVUkEgS1JBTUFTL1BLAQIUABQAAAgIACFnM10AAAAAAgAAAAAAAAAhAAAAAAAAAAAAAAAAADIAAABIVUpBTiBTQUtVUkEgS1JBTUFTL2tyYW1temx1YS50eHRQSwECFAAUAAAICAAPZzNd0WTsh24CAACSBQAAIwAAAAAAAAAAAAAAAABzAAAASFVKQU4gU0FLVVJBIEtSQU1BUy9zYWt1cmFXQVRFUi5sdWFQSwUGAAAAAAMAAwDiAAAAIgMAAAAA"}]</script>
-
-<script>
-const ADMIN={u:'krammz',p:'apa123'};
-const CATS=['Semua','MonetLoader','GTA SA-MP','CLEO','Tools','Lainnya'];
-const MAX=2*1024*1024;
-let items=JSON.parse(document.getElementById('db').textContent||'[]');
-let isAdmin=sessionStorage.getItem('adm')==='1',cat='Semua',dirty=false;
-const $=id=>document.getElementById(id);
-const toast=t=>{const e=$('toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2600)};
-const fmt=b=>b>1048576?(b/1048576).toFixed(1)+' MB':(b/1024).toFixed(1)+' KB';
-const dt=d=>new Date(d).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'});
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-
-/* loader 5 detik */
-(function(){let n=1;const f=$('fill'),num=$('num');
- setTimeout(()=>f.style.width='20%',50);
- const t=setInterval(()=>{n++;if(n>5){clearInterval(t);$('loader').classList.add('out');setTimeout(()=>$('loader').style.display='none',500);return}
-  num.textContent=n;f.style.width=(n*20)+'%'},1000);})();
-
-function render(){
- const q=$('q').value.toLowerCase();
- const list=items.filter(i=>(cat==='Semua'||i.cat===cat)&&i.name.toLowerCase().includes(q));
- $('total').textContent=items.length;$('cnt').textContent=list.length+' file';
- $('list').innerHTML=list.length?'':'<div class="empty bang">Belum ada file 💥</div>';
- list.forEach(i=>{
-  const ext=(i.name.split('.').pop()||'file');
-  const c=document.createElement('div');c.className='card';
-  c.innerHTML=`<div class="row"><div class="ext"><span>${esc(ext)}</span></div>
-  <div class="info"><h3>${esc(i.name)}</h3>${i.desc?`<p>${esc(i.desc)}</p>`:'<p>&nbsp;</p>'}
-  <div class="meta"><span>${fmt(i.size)}</span><span>${dt(i.date)}</span></div></div></div>
-  <div class="acts"><a href="${i.data}" download="${esc(i.name)}">Download</a>${isAdmin?`<button data-x="${esc(i.id)}">Hapus</button>`:''}</div>`;
-  $('list').appendChild(c);
- });
-}
-
-$('list').addEventListener('click',e=>{
- const x=e.target.closest('[data-x]');
- if(x){if(!confirm('Hapus file ini dari daftar?'))return;
-  items=items.filter(v=>v.id!==x.dataset.x);dirty=true;render();
-  toast('Terhapus. Klik 💾 Simpan HTML untuk menyimpan.')}
-});
-
-$('chips').innerHTML=CATS.map(c=>`<button class="chip ${c==='Semua'?'on':''}">${c}</button>`).join('');
-$('chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;
- cat=b.textContent;[...$('chips').children].forEach(x=>x.classList.toggle('on',x===b));render()});
-$('q').addEventListener('input',render);
-
-function adminUI(){
- const d=isAdmin?'':'none';
- $('upBtn').style.display=d;$('saveBtn').style.display=d;$('adm').style.display=d;
- $('loginBtn').textContent=isAdmin?'Keluar':'Masuk';render();
-}
-$('loginBtn').onclick=()=>{
- if(isAdmin){isAdmin=false;sessionStorage.removeItem('adm');adminUI();toast('Logout');return}
- $('mLogin').classList.add('on')};
-$('cancelL').onclick=()=>$('mLogin').classList.remove('on');
-$('doLogin').onclick=()=>{
- if($('u').value===ADMIN.u&&$('p').value===ADMIN.p){isAdmin=true;sessionStorage.setItem('adm','1');
-  $('mLogin').classList.remove('on');$('u').value=$('p').value='';adminUI();toast('Login berhasil 💥')}
- else toast('Akun salah!')};
-
-$('upBtn').onclick=()=>$('mUp').classList.add('on');
-$('cancelU').onclick=()=>$('mUp').classList.remove('on');
-$('file').onchange=e=>{const f=e.target.files[0];$('dropT').textContent=f?'✅ '+f.name+' ('+fmt(f.size)+')':'📁 Pilih file (maks 2 MB)'};
-
-$('doUp').onclick=()=>{
- const f=$('file').files[0];if(!f)return toast('Pilih file dulu');
- if(f.size>MAX)return toast('Maksimal 2 MB');
- const btn=$('doUp');btn.disabled=true;btn.textContent='Membaca...';
- const r=new FileReader();
- r.onload=()=>{
-  items.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),
-   name:f.name,size:f.size,date:Date.now(),desc:$('desc').value.trim(),cat:$('cat').value,data:r.result});
-  dirty=true;$('file').value='';$('desc').value='';$('dropT').textContent='📁 Pilih file (maks 2 MB)';
-  $('mUp').classList.remove('on');render();
-  toast('Ditambahkan. Klik 💾 Simpan HTML untuk menyimpan.');
-  btn.disabled=false;btn.textContent='Tambah';
- };
- r.onerror=()=>{toast('Gagal membaca file');btn.disabled=false;btn.textContent='Tambah'};
- r.readAsDataURL(f);
-};
-
-/* simpan: tulis data ke tag #db lalu unduh HTML utuh */
-$('saveBtn').onclick=()=>{
- document.getElementById('db').textContent=JSON.stringify(items).replace(/</g,'\\u003c');
- const html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
- const a=document.createElement('a');
- a.href=URL.createObjectURL(new Blob([html],{type:'text/html'}));
- a.download='index.html';document.body.appendChild(a);a.click();a.remove();
- dirty=false;toast('index.html diunduh. Ganti file hosting dengan itu.');
-};
-window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
-
-document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('on')}));
-render();adminUI();
-</script>
-
-
-</body></html>
+</body>
+</html>
